@@ -46,7 +46,6 @@ exports.store_json_fs = function(req, res) {
   //var dbURL, collection, sourceURL, batchSize, parseString = null;
   var dbURL, collection, sourceFile, batchSize, parseString = null;
   var response = '';
-  
   if (req.query.dbURL && req.query.collection && req.query.sourceFile){
     dbURL = req.query.dbURL;
     collection = req.query.collection;
@@ -55,7 +54,7 @@ exports.store_json_fs = function(req, res) {
     if (req.query.parseString) parseString = req.query.parseString; else parseString = '*.*';
   
     // where the data will end up
-    const outputDBConfig = { dbURL : dbURL, collection : collection, batchSize: batchSize };
+    const outputDBConfig = { dbURL : dbURL, collection : collection, batchSize: batchSize , useUnifiedTopology: true };
   
     // create the writable stream
     const writableStream = streamToMongoDB(outputDBConfig);

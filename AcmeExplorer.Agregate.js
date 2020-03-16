@@ -107,13 +107,13 @@ db.getCollection("applications").find({}).sort(
 );
 
 
-
-// The average, the minimum, the maximum, and the standard deviation of the number of trips managed per manager
+// number of trips managed per manager
 /*
 select manager, count(*)
 from trips
 group by manager
---*/
+*/
+// Requires official MongoShell 3.6+
 use ACME-Explorer;
 db.getCollection("trips").aggregate(
     [
@@ -130,8 +130,7 @@ db.getCollection("trips").aggregate(
         { 
             "$project" : { 
                 "manager" : "$_id.manager", 
-                "COUNT(*)" : "$COUNT(*)", 
-                "_id" : NumberInt(0)
+                "count" : "$COUNT(*)" 
             }
         }
     ], 
@@ -140,12 +139,49 @@ db.getCollection("trips").aggregate(
     }
 );
 
-// The average, the minimum, the maximum, and the standard deviation of the number of applications per trip
+// The average, the minimum, the maximum, and the standard deviation of the number of trips managed per manager
+// IntelliShell
+use ACME-Explorer;
+db.getCollection("applications").aggregate(
+    [
+        { 
+            "$group" : { 
+                "_id" : "$manager", 
+                "contador" : { 
+                    "$sum" : 1.0
+                }
+            }
+        }, 
+        { 
+            "$group" : { 
+                "_id" : 0.0, 
+                "average" : { 
+                    "$avg" : "$contador"
+                }, 
+                "min" : { 
+                    "$min" : "$contador"
+                }, 
+                "max" : { 
+                    "$max" : "$contador"
+                }, 
+                "stdev" : { 
+                    "$stdDevSamp" : "$contador"
+                }
+            }
+        }
+    ], 
+    { 
+        "allowDiskUse" : false
+    }
+);
+
+// number of applications per trip
 /*
 select trip, count(*)
 from applications
 group by trip
---*/
+*/
+// Requires official MongoShell 3.6+
 use ACME-Explorer;
 db.getCollection("applications").aggregate(
     [
@@ -162,8 +198,7 @@ db.getCollection("applications").aggregate(
         { 
             "$project" : { 
                 "trip" : "$_id.trip", 
-                "COUNT(*)" : "$COUNT(*)", 
-                "_id" : NumberInt(0)
+                "count" : "$COUNT(*)"
             }
         }
     ], 
@@ -172,13 +207,49 @@ db.getCollection("applications").aggregate(
     }
 );
 
+// The average, the minimum, the maximum, and the standard deviation of the number of applications per trip
+// IntelliShell
+use ACME-Explorer;
+db.getCollection("applications").aggregate(
+    [
+        { 
+            "$group" : { 
+                "_id" : "$trip", 
+                "contador" : { 
+                    "$sum" : 1.0
+                }
+            }
+        }, 
+        { 
+            "$group" : { 
+                "_id" : 0.0, 
+                "average" : { 
+                    "$avg" : "$contador"
+                }, 
+                "min" : { 
+                    "$min" : "$contador"
+                }, 
+                "max" : { 
+                    "$max" : "$contador"
+                }, 
+                "stdev" : { 
+                    "$stdDevSamp" : "$contador"
+                }
+            }
+        }
+    ], 
+    { 
+        "allowDiskUse" : false
+    }
+);
 
-// The average, the minimum, the maximum, and the standard deviation of the price of the trips
+// The average, the minimum, the maximum, and the standard deviation of the price of the trips per manager
 /*
 select manager, count(*), min(price), max(price), avg(price), stdev(price)
 from trips
 group by manager
---*/
+*/
+// Requires official MongoShell 3.6+
 use ACME-Explorer;
 db.getCollection("trips").aggregate(
     [
@@ -207,11 +278,75 @@ db.getCollection("trips").aggregate(
         { 
             "$project" : { 
                 "manager" : "$_id.manager", 
+                "count" : "$COUNT(*)", 
+                "min" : "$MIN(price)", 
+                "max" : "$MAX(price)", 
+                "avg" : "$AVG(price)", 
+                "stdev" : "$STDEV(price)"
+            }
+        }
+    ], 
+    { 
+        "allowDiskUse" : true
+    }
+);
+
+// The average, the minimum, the maximum, and the standard deviation of the price of the trips
+// Requires official MongoShell 3.6+
+use ACME-Explorer;
+db.getCollection("trips").aggregate(
+    [
+        { 
+            "$group" : { 
+                "_id" : { 
+
+                }, 
+                "MIN(price)" : { 
+                    "$min" : "$price"
+                }, 
+                "MAX(price)" : { 
+                    "$max" : "$price"
+                }, 
+                "AVG(price)" : { 
+                    "$avg" : "$price"
+                }, 
+                "STDEV(price)" : { 
+                    "$stdDevSamp" : "$price"
+                }
+            }
+        }, 
+        { 
+            "$project" : { 
+                "min" : "$MIN(price)", 
+                "max" : "$MAX(price)", 
+                "avg" : "$AVG(price)", 
+                "stdev" : "$STDEV(price)"
+            }
+        }
+    ], 
+    { 
+        "allowDiskUse" : true
+    }
+);
+
+// number of applications grouped by status
+use ACME-Explorer;
+db.getCollection("applications").aggregate(
+    [
+        { 
+            "$group" : { 
+                "_id" : { 
+                    "status" : "$status"
+                }, 
+                "COUNT(*)" : { 
+                    "$sum" : NumberInt(1)
+                }
+            }
+        }, 
+        { 
+            "$project" : { 
+                "status" : "$_id.status", 
                 "COUNT(*)" : "$COUNT(*)", 
-                "MIN(price)" : "$MIN(price)", 
-                "MAX(price)" : "$MAX(price)", 
-                "AVG(price)" : "$AVG(price)", 
-                "STDEV(price)" : "$STDEV(price)", 
                 "_id" : NumberInt(0)
             }
         }
@@ -221,7 +356,11 @@ db.getCollection("trips").aggregate(
     }
 );
 
-// The ratio of applications grouped by status
+// The ratio of applications grouped by status -> lo que devuele / el total de applications
+
+
+
+
 
 /*Explorers have a finder in which they can specify some search criteria regarding trips, namely:
 a key word, a price range, and a date range. The key word must be contained in the ticker,
@@ -234,8 +373,78 @@ should be able to change this parameter in order to adjust the performance of th
 The absolute maximum is 100 results*/
 
 // The average price range that explorers indicate in their finders.
+use ACME-Explorer;
+db.getCollection("finders").aggregate(
+    [
+        { 
+            "$group" : { 
+                "_id" : { 
+
+                }, 
+                "AVG(minPrice)" : { 
+                    "$avg" : "$minPrice"
+                }, 
+                "AVG(maxPrice)" : { 
+                    "$avg" : "$maxPrice"
+                }
+            }
+        }, 
+        { 
+            "$project" : { 
+                "avgMinPrice" : "$AVG(minPrice)", 
+                "avgMaxPrice" : "$AVG(maxPrice)", 
+                "_id" : NumberInt(0)
+            }
+        }
+    ], 
+    { 
+        "allowDiskUse" : true
+    }
+);
+
 
 // The top 10 key words that the explorers indicate in their finders.
+/*
+select keyword, count(*)
+from finders
+group by keyword
+order by count(*) desc
+limit 10
+*/
+use ACME-Explorer;
+db.getCollection("finders").aggregate(
+    [
+        { 
+            "$group" : { 
+                "_id" : { 
+                    "keyword" : "$keyword"
+                }, 
+                "COUNT(*)" : { 
+                    "$sum" : NumberInt(1)
+                }
+            }
+        }, 
+        { 
+            "$project" : { 
+                "keyword" : "$_id.keyword", 
+                "count" : "$COUNT(*)"
+		}
+        }, 
+        { 
+            "$sort" : { 
+                "COUNT(*)" : NumberInt(-1)
+            }
+        }, 
+        { 
+            "$limit" : NumberInt(10)
+        }
+    ], 
+    { 
+        "allowDiskUse" : true
+    }
+);
+
+
 
 /*Launch a process to compute a cube of the form M[e, p] that returns the amount of
 money that explorer e has spent on trips during period p, which can be M01-M36 to

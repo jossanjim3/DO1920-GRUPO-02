@@ -1,0 +1,18 @@
+[
+  '{{repeat(50, 100)}}',
+  
+   {
+     
+    _id: '{{objectId()}}',
+    email:'{{email()}}',
+    name:'{{firstName()}}',
+    surname:'{{surname()}}',
+    password:'{{integer(100000,30000000)}}',
+    address: '{{integer(100, 999)}} {{street()}}, {{city()}}, {{state()}}, {{integer(100, 10000)}}',
+    role:'{{random("EXPLORER", "ADMINISTRATOR", "MANAGER","SPONSOR")}}',
+    language:'{{random("EN","SP")}}',
+    validated:'{{"true"}}',
+    createdAt:'{{date(new Date(2020,0,1),new Date(),"YYYY-M-dThh:mm:ss Z")}}'
+     
+	}
+]

@@ -1,3 +1,4 @@
+
 'use strict';
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
@@ -25,8 +26,23 @@ var DataWareHouseSchema = new mongoose.Schema({
         stdev: Number,
     },
     //The ratio of applications grouped by status
-    ratioApplications: Map,
+    ratioApplications: {
+      type: Map
+    },
     //The average price range that explorers indicate in their finders
-    averagePriceRangeExplorers: Number
+    averagePriceRangeExplorers: Number,
+    Top10keywords: [{
+      type: String
+    }],
+    computationMoment: {
+      type: Date,
+      default: Date.now
+    },
+    rebuildPeriod: {
+      type: String
+    }
+}, { strict: false });
 
-})
+DataWareHouseSchema.index({ computationMoment: -1 });
+
+module.exports = mongoose.model('DataWareHouse', DataWareHouseSchema);

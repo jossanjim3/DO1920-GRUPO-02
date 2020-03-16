@@ -1,0 +1,226 @@
+{
+	"info": {
+		"_postman_id": "262b3805-bf4e-4b9d-af25-a0be11c3090f",
+		"name": "ACME-Explorer-Sponsorships",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Sponsorship",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"banner\": \"No aun\",\n\t\"link\": \"No aun\",\n\t\"sponsor\": \"5e4d890345dd27745b5f6e81\",\n\t\"tripSponsorships\": [{\"trip\":\"5e52755ba9be7b1c51e2d890\"}]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/v1/sponsorships",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"sponsorships"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Sponsorships",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/v1/sponsorships",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"sponsorships"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Sponsorships ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/v1/sponsorships/5e52a1650dbb8025b420b713",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"sponsorships",
+						"5e52a1650dbb8025b420b713"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Sponsorships Sponsor",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/v1/sponsorships/sponsors/5e4d890345dd27745b5f6e81",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"sponsorships",
+						"sponsors",
+						"5e4d890345dd27745b5f6e81"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Sponsorships Trip",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/v1/sponsorships/trips/5e52755ba9be7b1c51e2d867",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"sponsorships",
+						"trips",
+						"5e52755ba9be7b1c51e2d867"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Sponsorship",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"link\": \"No aun, y no se espera hasta largo\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/v1/sponsorships/5e52a1650dbb8025b420b713",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"sponsorships",
+						"5e52a1650dbb8025b420b713"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Remove Sponsorship",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/v1/sponsorships/5e52a1650dbb8025b420b713",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"sponsorships",
+						"5e52a1650dbb8025b420b713"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pay Sponsorship",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/v1/sponsorships/5e5ce5f8abfe8f5cd395333d/5e52755ba9be7b1c51e2d890/pay",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"sponsorships",
+						"5e5ce5f8abfe8f5cd395333d",
+						"5e52755ba9be7b1c51e2d890",
+						"pay"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cancel Sponsorship",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/v1/sponsorships/5e52a1650dbb8025b420b713/5e52755ba9be7b1c51e2d867/cancel",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"sponsorships",
+						"5e52a1650dbb8025b420b713",
+						"5e52755ba9be7b1c51e2d867",
+						"cancel"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

@@ -51,8 +51,8 @@ var tripSchema = new Schema({
     },
     startDate:{
         type: Date,
-        validate: function() {
-            return this.startDate > this.endDate;
+        validate: function(startDate) {
+            return startDate < this.endDate;
         },
         message: 'startDate can\'t be greater than endDate'
     },

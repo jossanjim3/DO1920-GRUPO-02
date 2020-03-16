@@ -19,7 +19,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"name\": \"Lionel\",\n\t\"surname\": \"Messi\",\n\t\"email\": \"lapulga@gmail.com\",\n\t\"password\": \"millonetis\",\n\t\"phone\": \"+34698347889\",\n\t\"role\": \"EXPLORER\"\n}",
+					"raw": "{\n\t\"name\": \"Manu\",\n\t\"surname\": \"Carreño\",\n\t\"email\": \"eLarguero@gmail.com\",\n\t\"password\": \"sanedrin\",\n\t\"phone\": \"+3469834567\",\n\t\"role\": \"EXPLORER\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -146,6 +146,41 @@
 			"response": []
 		},
 		{
+			"name": "Create an actor as a manager",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Eder\",\n\t\"surname\": \"Sarabia\",\n\t\"email\": \"segundo@gmail.com\",\n\t\"password\": \"pasionFutbol\",\n\t\"phone\": \"+3469834567\",\n\t\"role\": \"MANAGER\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/v1/actors",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"actors"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Modify an actor",
 			"request": {
 				"method": "PUT",
@@ -167,7 +202,7 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/v1/actors/5e5b8f8af2fb6b26b8526e3f",
+					"raw": "localhost:8080/v1/actors/5e675c19f9b31922a05c8f27",
 					"host": [
 						"localhost"
 					],
@@ -175,27 +210,27 @@
 					"path": [
 						"v1",
 						"actors",
-						"5e5b8f8af2fb6b26b8526e3f"
+						"5e675c19f9b31922a05c8f27"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Deactivate an actor",
+			"name": "Invalidate an actor",
 			"request": {
 				"method": "PUT",
 				"header": [
 					{
 						"key": "Content-Type",
 						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
+						"type": "text",
+						"value": "application/json"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"validated\": \"false\"\n}",
+					"raw": "{\n\t\"validated\": false\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -203,7 +238,7 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/v1/actors/5e48200bf6af4e2958478963/validated",
+					"raw": "localhost:8080/v1/actors/5e675c19f9b31922a05c8f27/validated",
 					"host": [
 						"localhost"
 					],
@@ -211,7 +246,7 @@
 					"path": [
 						"v1",
 						"actors",
-						"5e48200bf6af4e2958478963",
+						"5e675c19f9b31922a05c8f27",
 						"validated"
 					]
 				}
@@ -219,7 +254,7 @@
 			"response": []
 		},
 		{
-			"name": "Reactivate an actor",
+			"name": "Validate an actor",
 			"request": {
 				"method": "PUT",
 				"header": [
@@ -232,7 +267,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"validated\":\"true\"\n}",
+					"raw": "{\n\t\"validated\":true\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -240,7 +275,7 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/v1/actors/5e48200bf6af4e2958478963/validated",
+					"raw": "localhost:8080/v1/actors/5e68e76dc07fde100cf6e813/validated",
 					"host": [
 						"localhost"
 					],
@@ -248,7 +283,7 @@
 					"path": [
 						"v1",
 						"actors",
-						"5e48200bf6af4e2958478963",
+						"5e68e76dc07fde100cf6e813",
 						"validated"
 					]
 				}
@@ -272,7 +307,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\n\t\"id\":\"5e48200bf6af4e2958478963\"\n\t\n}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -280,7 +315,7 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/v1/actors/5e48200bf6af4e2958478963",
+					"raw": "localhost:8080/v1/actors/5e675c19f9b31922a05c8f27",
 					"host": [
 						"localhost"
 					],
@@ -288,7 +323,7 @@
 					"path": [
 						"v1",
 						"actors",
-						"5e48200bf6af4e2958478963"
+						"5e675c19f9b31922a05c8f27"
 					]
 				}
 			},
@@ -364,6 +399,53 @@
 						"v1",
 						"actors",
 						"5e5b8f8af2fb6b26b8526e3f"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Carga masiva actors",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/storage/fs?dbURL=mongodb://myUser:myUserPassword@localhost:27017/ACME-Explorer&collection=actors&sourceFile=/Users/Carlo/Documents/Máster ISCDG/ACS/\\Proyecto\\ASS-ACME-Explorer-2020/generated.json&mongooseModel=Actors&parseString=*",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"storage",
+						"fs"
+					],
+					"query": [
+						{
+							"key": "dbURL",
+							"value": "mongodb://myUser:myUserPassword@localhost:27017/ACME-Explorer"
+						},
+						{
+							"key": "collection",
+							"value": "actors"
+						},
+						{
+							"key": "sourceFile",
+							"value": "/Users/Carlo/Documents/Máster ISCDG/ACS/\\Proyecto\\ASS-ACME-Explorer-2020/generated.json"
+						},
+						{
+							"key": "mongooseModel",
+							"value": "Actors"
+						},
+						{
+							"key": "parseString",
+							"value": "*"
+						}
 					]
 				}
 			},

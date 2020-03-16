@@ -34,13 +34,12 @@ var ActorSchema = new Schema({
 
     phone:  {
         type: String,
-        required: 'Kindly enter the phone of the actor'
     },
     
-    //all actors are validated initially, only an admin can modify this property an ban or unban an actor
+    //all actors are not validated initially, only an admin can modify this property to validate or invalidate an actor:
     validated: {
         type: Boolean,
-        default:true
+        default:false
     },
     role:{
         type: String,
@@ -50,7 +49,11 @@ var ActorSchema = new Schema({
     createdAt:{
         type: Date,
         default: Date.now
-    }
+    }, 
+    customToken: {
+        type: String
+      }
+
 }, {strict:false});
 
 

@@ -1,0 +1,87 @@
+{
+	"info": {
+		"_postman_id": "66ab7aac-a02f-46ed-b566-e999c308a312",
+		"name": "ACME-Explorer-Finder",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "All Finders",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/v1/finders",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"finders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create or Update Finder of Actor",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"keyword\": \"null\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/v1/finders/explorers/5e4d890645dd27745b5f6e81",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"finders",
+						"explorers",
+						"5e4d890645dd27745b5f6e81"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateMaxHours",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/v1/finders/timeResultsSaved/10",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"finders",
+						"timeResultsSaved",
+						"10"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

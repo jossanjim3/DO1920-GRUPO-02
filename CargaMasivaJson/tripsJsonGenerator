@@ -1,25 +1,26 @@
 [
-    {
-      'repeat(5, 10)': {
-        _id: '{{objectId()}}',
-        title: '{{lorem(4, "words")}}',
-        description: '{{lorem(1, "paragraphs")}}',
-        price: '{{integer(100, 600)}}',
-        requeriments: ['{{lorem(1, "sentences")}}'],
-        startDate: '{{date(new Date(2020, 5, 5), new Date(2020, 6, 6))}}',
-        endDate: '{{date(new Date(2020, 6, 6), new Date())}}',
-        stages: [
-          {
-            'repeat(3)': {
-              title: '{{lorem(4, "words")}}',
-              description: '{{lorem(1, "paragraphs")}}',
-                price: '{{integer(100, 600)}}'
-            }
-          }
-        ],
-        manager: '5e47fcb3aed9531440793134'
-        
-  
-      }
-    }
+   
+  '{{repeat(100, 110)}}',
+  {
+    _id: '{{objectId()}}',
+    title: '{{lorem(4, "words")}}',
+    ticker: '{{guid()}}',
+    description: '{{lorem(1, "paragraphs")}}',
+    price: '{{integer(100, 600)}}',
+    requeriments: ['{{lorem(1, "sentences")}}'],
+    startDate: '{{date(new Date(2020, 5, 5), new Date(2020, 6, 6))}}',
+    endDate: '{{date(new Date(2020, 6, 6), new Date())}}',
+    stages: [
+      '{{repeat(3)}}',
+      {
+          title: '{{lorem(4, "words")}}',
+          description: '{{lorem(1, "paragraphs")}}',
+          price: '{{integer(100, 600)}}'
+        }
+    ],
+    manager: '5e47fcb3aed9531440793134'
+
+
+  }
+
   ]

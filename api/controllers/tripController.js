@@ -29,16 +29,14 @@ exports.search_trips = function(req,res){
     var query = {};
     var error = false;
     if (req.query.keyword) {
-      query.$text = {$search: req.query.keyword ,$language: "es"};
+      query.$text = {$search: req.query.keyword};
     }
 
     if(req.query.minPrice && req.query.maxPrice){
-        //TODO - Validar que max no sea menor que min
-
-        if(req.query.minPrice > req.query.maxPrice){
+        if(parseInt(req.query.minPrice) > parseInt(req.query.maxPrice)){
             //Error
             error=true;
-            res.status(400).send({"name":"ValidationError", "message": "Mininum price is greater than maximum price"});
+            res.status(422).send({"name":"ValidationError", "message": "Mininum price is greater than maximum price"});
         } else {
             query.price = {$gte: req.query.minPrice, $lte: req.query.maxPrice};
         }
@@ -51,10 +49,10 @@ exports.search_trips = function(req,res){
         }
     }
 
-    //TODO - Validar que max no sea inferior a min 
-    if(req.query.minDate > req.query.maxDate){
+
+    if(new Date(req.query.minDate) > new Date(req.query.maxDate)){
         error=true;
-        res.status(400).send({"name":"ValidationError", "message": "Mininum Date is greater than maximum Date"});
+        res.status(422).send({"name":"ValidationError", "message": "Mininum Date is greater than maximum Date"});
     }
 
     if(req.query.minDate){
@@ -82,8 +80,8 @@ exports.search_trips = function(req,res){
     if(req.query.sortedBy){
       sort+=req.query.sortedBy;
     }
-  
-    console.log("Query: "+query+" Skip:" + skip+" Limit:" + limit+" Sort:" + sort);
+    console.log("Query: "+query.toString()+" Skip:" + skip+" Limit:" + limit+" Sort:" + sort);
+    console.log(query);
     if(!error){
         Trip.find(query)
         .sort(sort)
