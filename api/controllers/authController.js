@@ -30,6 +30,31 @@ exports.getUserId = async function(idToken) {
 
   }
 
+exports.getUser = async function(idToken) {
+
+    console.log('idToken: '+idToken);
+    var id = null;
+  
+    var actorFromFB = await admin.auth().verifyIdToken(idToken);
+     
+        var uid = actorFromFB.uid;
+        var auth_time = actorFromFB.auth_time;
+        var exp =  actorFromFB.exp;
+        console.log('idToken verificado para el uid: '+uid);
+        console.log('auth_time: '+auth_time);
+        console.log('exp: '+exp);
+  
+        var mongoActor = await Actor.findOne({ email: uid });
+         if (!mongoActor) { return null; }
+  
+          else {
+              console.log('The actor exists in our DB');
+              console.log('actor: '+mongoActor);
+              id = mongoActor._id;
+              return mongoActor;
+          }
+  }  
+
 
 exports.verifyUser = function(requiredRoles) {
   return function(req, res, callback) {
@@ -39,7 +64,6 @@ exports.verifyUser = function(requiredRoles) {
     console.log('idToken: '+idToken);
 
     admin.auth().verifyIdToken(idToken).then(function(decodedToken) {
-        //console.log('entra en el then de verifyIdToken: ');
 
         var uid = decodedToken.uid;
         var auth_time = decodedToken.auth_time;

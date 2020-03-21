@@ -37,9 +37,9 @@ module.exports = function(app) {
     .put(actors.update_an_actor_authenticated)
 
   app.route('/v2/actors/:actorId/validated')
-
+    
     //validate or invalidate an actor with authentication
-    .put(authController.verifyUser(["ADMINISTRATOR"]),actors.modify_actor_validation);
+    .put(authController.verifyUser(["ADMINISTRATOR"]),actors.modify_actor_validation);//only an admin can do it
   
 
 };

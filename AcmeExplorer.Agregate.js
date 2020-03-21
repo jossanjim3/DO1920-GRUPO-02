@@ -330,6 +330,11 @@ db.getCollection("trips").aggregate(
 );
 
 // number of applications grouped by status
+/*
+select status, count(*)
+from applications
+group by status
+*/
 use ACME-Explorer;
 db.getCollection("applications").aggregate(
     [
@@ -356,9 +361,34 @@ db.getCollection("applications").aggregate(
     }
 );
 
-// The ratio of applications grouped by status -> lo que devuele / el total de applications
+// The ratio of applications grouped by status -> lo que devuele por status / el total de applications
+// Requires official MongoShell 3.6+
 
-
+// RATIO PENDING
+db.getCollection("applications").aggregate(
+                              
+                {$facet:{
+                        totalByStatus: [
+                                        {$match : {"status" : "PENDING"}}, // 'PENDING','REJECTED','DUE','ACCEPTED','CANCELLED'
+                                        {$group : {_id:null, totalStatus:{$sum:1}}}
+                                       ],
+                        total:         [{$group : {_id:null, totalApplication:{$sum:1}}}]
+                        
+                         }
+                },
+                        
+                {$project: {_id:0,                            
+                            total : {$arrayElemAt: ["$total.totalApplication", 0 ]},
+                            totalByStatus : {$arrayElemAt: ["$totalByStatus.totalStatus", 0 ]},
+                            ratioApplicationsPending: { $divide: [
+                                                                {$arrayElemAt: ["$totalByStatus.totalStatus", 0 ]}, 
+                                                                {$arrayElemAt: ["$total.totalApplication", 0 ]} 
+                                                           ]
+                                               }
+                           }
+                
+                }                      
+)
 
 
 

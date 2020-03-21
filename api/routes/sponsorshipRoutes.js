@@ -1,7 +1,8 @@
 'use strict';
 module.exports = function(app) {
     var sponsorships = require('../controllers/sponsorshipController');
-
+    const authController = require('../controllers/authController');
+    
     /**
      * Get all the sponsorships belonging to a sponsor.
      *    Required role: Sponsor
@@ -74,4 +75,22 @@ module.exports = function(app) {
      */
     app.route('/v1/sponsorships/:sponsorshipId/:tripId/cancel')
         .put(sponsorships.cancel_sponsorships_trip);
+
+    
+    app.route('/v2/sponsorships')
+        .post(authController.verifyUser(["SPONSOR"]), sponsorships.create_a_sponsorship_auth);
+
+    app.route('/v2/sponsorships/sponsors/:sponsorId')
+        .get(authController.verifyUser(["SPONSOR"]), sponsorships.list_sponsorships_sponsor_auth);
+    
+    app.route('/v2/sponsorships/trips/:tripId')
+        .get(authController.verifyUser(["SPONSOR"]), sponsorships.find_sponsorships_trip_auth);
+
+    app.route('/v2/sponsorships/trips/:tripId/pay')
+        .get(authController.verifyUser(["SPONSOR"]), sponsorships.pay_sponsorships_trip_auth);
+    
+    app.route('/v2/sponsorships/trips/:tripId/cancel')
+        .get(authController.verifyUser(["SPONSOR"]), sponsorships.cancel_sponsorships_trip_auth);
+    
+    
 };

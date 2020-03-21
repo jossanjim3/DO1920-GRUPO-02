@@ -19,7 +19,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"name\": \"Manu\",\n\t\"surname\": \"Carreño\",\n\t\"email\": \"eLarguero@gmail.com\",\n\t\"password\": \"sanedrin\",\n\t\"phone\": \"+3469834567\",\n\t\"role\": \"EXPLORER\"\n}",
+					"raw": "{\n\t\"name\": \"Mohammed\",\n\t\"surname\": \"Salah\",\n\t\"email\": \"proximoBalonDeOro@gmail.com\",\n\t\"password\": \"egipto\",\n\t\"phone\": \"+3469834567\",\n\t\"role\": \"EXPLORER\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -27,7 +27,44 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/v1/actors",
+					"raw": "http://localhost:8080/v1/actors",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"actors"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create an actor as an explorer https",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Sebastian\",\n\t\"surname\": \"Castellanos\",\n\t\"email\": \"castilla@gmail.com\",\n\t\"password\": \"mobius\",\n\t\"phone\": \"+3469834567\",\n\t\"role\": \"EXPLORER\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:8080/v1/actors",
+					"protocol": "https",
 					"host": [
 						"localhost"
 					],
@@ -194,7 +231,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"email\":\"benzemaBalonDeOro@gmail.com\"\n}",
+					"raw": "{\n\t\"password\":\"catenaccio\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -202,7 +239,7 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/v1/actors/5e675c19f9b31922a05c8f27",
+					"raw": "localhost:8080/v1/actors/5e68e68f0444453780ca3fef",
 					"host": [
 						"localhost"
 					],
@@ -210,7 +247,44 @@
 					"path": [
 						"v1",
 						"actors",
-						"5e675c19f9b31922a05c8f27"
+						"5e68e68f0444453780ca3fef"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modify an actor https",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"password\":\"nuevapassword\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:8080/v1/actors/5e68dedf587344176855050e",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"actors",
+						"5e68dedf587344176855050e"
 					]
 				}
 			},
@@ -275,7 +349,7 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/v1/actors/5e68e76dc07fde100cf6e813/validated",
+					"raw": "localhost:8080/v1/actors/5e6f5c28fc0d960c68db2a72/validated",
 					"host": [
 						"localhost"
 					],
@@ -283,7 +357,7 @@
 					"path": [
 						"v1",
 						"actors",
-						"5e68e76dc07fde100cf6e813",
+						"5e6f5c28fc0d960c68db2a72",
 						"validated"
 					]
 				}
@@ -324,6 +398,46 @@
 						"v1",
 						"actors",
 						"5e675c19f9b31922a05c8f27"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve an actor https",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:8080/v1/actors/5e68dcd1587344176855050d",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"actors",
+						"5e68dcd1587344176855050d"
 					]
 				}
 			},
@@ -405,6 +519,43 @@
 			"response": []
 		},
 		{
+			"name": "Delete an actor https",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:8080/v1/actors/5e68dcd1587344176855050d",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"actors",
+						"5e68dcd1587344176855050d"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Carga masiva actors",
 			"request": {
 				"method": "POST",
@@ -414,7 +565,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8080/v1/storage/fs?dbURL=mongodb://myUser:myUserPassword@localhost:27017/ACME-Explorer&collection=actors&sourceFile=/Users/Carlo/Documents/Máster ISCDG/ACS/\\Proyecto\\ASS-ACME-Explorer-2020/generated.json&mongooseModel=Actors&parseString=*",
+					"raw": "http://localhost:8080/v1/storage/fs?dbURL=mongodb://myUser:myUserPassword@localhost:27017/ACME-Explorer&collection=actors&sourceFile=/Users/Carlo/Documents/Máster ISCDG/ACS/\\Proyecto\\ASS-ACME-Explorer-2020/CargaMasivaJson/actorsMassiveLoad.json&mongooseModel=Actors&parseString=*",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -436,7 +587,7 @@
 						},
 						{
 							"key": "sourceFile",
-							"value": "/Users/Carlo/Documents/Máster ISCDG/ACS/\\Proyecto\\ASS-ACME-Explorer-2020/generated.json"
+							"value": "/Users/Carlo/Documents/Máster ISCDG/ACS/\\Proyecto\\ASS-ACME-Explorer-2020/CargaMasivaJson/actorsMassiveLoad.json"
 						},
 						{
 							"key": "mongooseModel",

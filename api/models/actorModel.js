@@ -91,6 +91,5 @@ ActorSchema.index({email:1});
 //indice de los actores que solo esten baneados (validated=false):
 ActorSchema.index({validated:1},{ partialFilterExpression: {$eq:false}});
 
-//ActorSchema.index({"email": 1}, {unique: true});
 
 module.exports = mongoose.model('Actors', ActorSchema)
