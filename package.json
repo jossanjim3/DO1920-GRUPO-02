@@ -4,7 +4,7 @@
   "description": "ACME-Explorer for ASS - Master IS",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js",
+    "start": "node app.js",
     "test": "mocha --exit"
   },
   "repository": {
@@ -33,6 +33,7 @@
     "mongoose": "^5.9.1",
     "nanoid": "^2.1.11",
     "node-fetch": "^2.6.0",
+    "nodemon": "^2.0.2",
     "olap-cube": "^1.0.0",
     "stream-to-mongo-db": "^1.6.0"
   },

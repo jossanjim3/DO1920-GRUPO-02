@@ -1,0 +1,40 @@
+version: '3'
+services: 
+  acme-explorer:
+    build: .
+    ports:
+      - "127.0.0.1:${PORT}:8080"
+    depends_on: 
+      - mongo
+    restart: on-failure
+    volumes:
+      - "logsvol:/usr/src/app/logs"
+    environment: 
+      - NODE_ENV=${NODE_ENV}
+      - PORT=${PORT}
+      - DBPORT=${DBPORT}
+      - VIRTUAL_HOST=${VIRTUAL_HOST}
+      - VIRTUAL_PORT=${PORT}
+      - mongoDBHostname=mongo
+      - mongoDBUser=${MONGO_USER}
+      - mongoDBPass=${MONGO_PWD}
+  mongo:
+    image: "mongo"
+    expose: 
+      - ${DBPORT}
+    command: --port ${DBPORT} --logpath /var/log/mongodb/mongodb.log
+    volumes:
+      - "datavol:/data/db"
+      - "logsvol:/var/log/mongodb"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PWD}
+volumes:
+  datavol:
+  logsvol:
+    external: true
+
+networks: 
+  default:
+    external: 
+      name: service-tier
