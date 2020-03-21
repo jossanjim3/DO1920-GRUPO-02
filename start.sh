@@ -7,7 +7,7 @@ export DBPORT=27017
 export VIRTUAL_HOST=${NODE_ENV}.${BASE_SITE}
 export MONGO_USER=userMongoExplorer
 export MONGO_PWD=userMongoExplorerPass
-docker-compose -p ${VIRTUAL_HOST} up 
+docker-compose -p ${VIRTUAL_HOST} up -d
 
 #production
 export NODE_ENV=production

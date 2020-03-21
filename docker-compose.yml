@@ -27,8 +27,8 @@ services:
       - "datavol:/data/db"
       - "logsvol:/var/log/mongodb"
     environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PWD}
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PWD}
 volumes:
   datavol:
   logsvol:
