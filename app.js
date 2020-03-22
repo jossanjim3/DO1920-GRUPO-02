@@ -5,6 +5,8 @@ var express = require('express'),
  port = process.env.PORT || 8080,
  mongoose = require('mongoose'),
  https= require('https'),
+ http = require('http'),
+ cors = require('cors'),
  fs=require('fs'),
  Actor = require('./api/models/actorModel'),
  Application = require('./api/models/applicationModel'),
@@ -44,7 +46,8 @@ mongoose.connect(mongoDBURI, {
  useFindAndModify: true,
  useUnifiedTopology: true 
 });
- 
+
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -93,9 +96,10 @@ console.log("Connecting DB to: " + mongoDBURI);
 
 mongoose.connection.on("open", function (err, conn) {
 
- app.listen(port, function () {
+http.createServer(app).listen(port, function() {
  console.log('ACME-Explorer RESTful API server started on: ' + port);
- });
+});
+
  
  //Para cambiar a la version https basta con descomentar estas lineas de código y comentar el app.listen de arriba:
  /*

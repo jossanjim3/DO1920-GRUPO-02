@@ -4,7 +4,7 @@
   "description": "ACME-Explorer for ASS - Master IS",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js",
+    "start": "node app.js",
     "test": "mocha --exit"
   },
   "repository": {
@@ -24,15 +24,18 @@
     "bcrypt": "^3.0.8",
     "body-parser": "^1.19.0",
     "chai": "^4.2.0",
+    "cors": "^2.8.5",
     "cron": "^1.8.2",
     "dateformat": "^3.0.3",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "firebase-admin": "^8.9.2",
     "git": "^0.1.5",
+    "http": "0.0.0",
     "mongoose": "^5.9.1",
     "nanoid": "^2.1.11",
     "node-fetch": "^2.6.0",
+    "nodemon": "^2.0.2",
     "olap-cube": "^1.0.0",
     "stream-to-mongo-db": "^1.6.0"
   },
