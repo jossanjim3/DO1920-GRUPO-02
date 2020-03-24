@@ -8,9 +8,9 @@ const idExplorer = "5e4d890645dd27745b5f6e81";
 const explorers = "/explorers"
 
 chai.use(chaiHttp);
-describe("Tests on finder", () => {
-    describe("Tests on GET", () => {
-        it("Gets all finders", done => {
+describe("Tests on finder", function() {
+    describe("Tests on GET", function(){
+        it("Gets all finders", (done) => {
             chai
             .request(app)
             .get(route)
@@ -19,18 +19,20 @@ describe("Tests on finder", () => {
                 done();
             });
         });
-        it("Get finder by explorerID, unexistent", done => {
+        it("Get finder by explorerID, unexistent", function(done) {
+            this.timeout(10000);
             chai
             .request(app)
-            .get(route + "/explorers" + "/5e4d890645dd27745b5f6aaa")
+            .get(route + "/explorers" + "/aaaaaaaaaaaaaaaaaaaaaaaa")
             .end((err, res) => {
                 expect(res).to.have.status(200);
                 done();
-            });
+            }).catch(done());
         });
     });
-    describe("PUT or CREATE", () => {
-        it("Create finder", done =>{
+    describe("PUT or CREATE", function() {
+        it("Create finder", function(done){
+            this.timeout(10000);
             chai
             .request(app)
             .put(route + explorers + "/" + idExplorer)
@@ -41,9 +43,10 @@ describe("Tests on finder", () => {
             .end((err, res) => {
                 expect(res).to.have.status(201);
                 done();
-            });
+            }).catch(done());
         });
-        it("Read finder, because no changes were made", done =>{
+        it("Read finder, because no changes were made", function(done){
+            this.timeout(10000);
             chai
             .request(app)
             .put(route + explorers + "/" + idExplorer)
@@ -54,9 +57,10 @@ describe("Tests on finder", () => {
             .end((err, res) => {
                 expect(res).to.have.status(200);
                 done();
-            });
+            }).catch(done());
         });
-        it("Updates finder, because a change was made", done =>{
+        it("Updates finder, because a change was made", function(done){
+            this.timeout(10000);
             chai
             .request(app)
             .put(route + explorers + "/" + idExplorer)
@@ -67,9 +71,10 @@ describe("Tests on finder", () => {
             .end((err, res) => {
                 expect(res).to.have.status(201);
                 done();
-            });
+            }).catch(done());
         });
-        it("Updates finder, no parameters, should work", done => {
+        it("Updates finder, no parameters, should work", function(done) {
+            this.timeout(10000);
             chai
             .request(app)
             .put(route + explorers + "/" + idExplorer)
@@ -77,9 +82,10 @@ describe("Tests on finder", () => {
             .end((err, res) => {
                 expect(res).to.have.status(201);
                 done();
-            });
+            }).catch(done());
         })
-        it("Invalid combination of dates introduced, expect error", done => {
+        it("Invalid combination of dates introduced, expect error", function(done) {
+            this.timeout(10000);
             chai
             .request(app)
             .put(route + explorers + "/" + idExplorer)
@@ -91,9 +97,10 @@ describe("Tests on finder", () => {
             .end((err, res) => {
                 expect(res).to.have.status(400);
                 done();
-            });
+            }).catch(done());
         });
-        it("Invalid combination of prices introduced, expect error", done => {
+        it("Invalid combination of prices introduced, expect error", function(done) {
+            this.timeout(10000);
             chai
             .request(app)
             .put(route + explorers + "/" + idExplorer)
@@ -105,11 +112,11 @@ describe("Tests on finder", () => {
             .end((err, res) => {
                 expect(res).to.have.status(400);
                 done();
-            });
+            }).catch(done());
         });
     });
     describe("DELETE", () => {
-        it("Delete finder by sponsor ID", done =>{
+        it("Delete finder by sponsor ID", function(done){
             chai
             .request(app)
             .delete(route + explorers + "/" + idExplorer)

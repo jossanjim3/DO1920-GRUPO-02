@@ -84,13 +84,13 @@ async function agregarNuevosActores(countAct,numNewActors){
             "role": roleArray[randomNumber]
         });
 
-        var actor = await newActor.save();
-        if (actor == undefined){
+        try {
+            var actor = await newActor.save();
+            newActorsArray.push(actor);
+        } catch (error) {
             i = i - 1;
             contador = contador - 1;
         }
-        //console.log("Actor saved! : " + actor._id);
-        newActorsArray.push(actor);
 
         contador += 1;
         
@@ -167,7 +167,7 @@ async function agregarNuevasApplications(countAppli,numNewApplis){
     var newApplissArray = [];
     var explorerBBDD = await getExplorers();
     var tripsBBDD = await getTrips();
-    console.log(tripsBBDD.length);
+    //console.log(tripsBBDD.length);
 
     for (var i = 0; i <= numNewApplis-1; i++) {
 
@@ -181,12 +181,13 @@ async function agregarNuevasApplications(countAppli,numNewApplis){
             }
           );
 
-        var app = await newAppl.save();
-        if (app == undefined){
+        try {
+            var app = await newAppl.save();
+            newApplissArray.push(app);
+        } catch (error) {
             i = i - 1;
             contador = contador - 1;
         }
-        newApplissArray.push(app);
 
         contador += 1;
         

@@ -63,7 +63,7 @@ var getInformationCube = function(callback){
     {
       $group: {
         _id: {explorer: "$explorer.email", year: {$year: "$createdAt"}, month: {$month: "$createdAt"}},
-        totalSpent: {$sum: "$trip.price"}
+        totalSpent: {$sum: {$arrayElemAt: ["$trip.price", 0 ]}}
       }
     }
   ], function(err, res){
@@ -127,9 +127,9 @@ function getCubeDataByDates(pairMonthYear, table){
   const inPeriod = ((point) => {
     return (
       //Checking if month and year are past the actual month, or the month where we start to consider.
-      (point[1] < pairMonthYear[0][0] && point[2] < pairMonthYear[0][1]) &&
+      (point[1] < pairMonthYear[0][1] || (point[1] == pairMonthYear[0][1] && point[2] <= pairMonthYear[0][0])) &&
       //Checking if we do not go further than 36 months, or those introduced.
-      (point[1] > pairMonthYear[1][0] && point[2] > pairMonthYear[1][1])
+      (point[1] > pairMonthYear[1][1] || (point[1] == pairMonthYear[1][1] && point[2] >= pairMonthYear[1][0]))
     )
   });
 
@@ -150,8 +150,8 @@ function getCubeDataByUser(userEmail, table){
    */ 
 function obtainingPairMonthYear(monthsBackwards){
   var today = new Date();
-  var actualMonth = today.getMonth();
-  var actualYear = today.getYear();
+  var actualMonth = today.getMonth() + 1;
+  var actualYear = today.getFullYear();
 
   var year = actualYear;
   var month = actualMonth - monthsBackwards;
@@ -160,6 +160,7 @@ function obtainingPairMonthYear(monthsBackwards){
     month += 12;
     --year;
   }
+
   return [month, year];
 }
 
@@ -185,24 +186,35 @@ function getCubeDataByInterval(startingMonth, endingMonth){
 
 exports.getCubeDataByIntervalMonths = function(req, res){
   var promise = new Promise(function(resolve, reject){
-    var cube_prom = getCubeDataByInterval(req.params.startingMonth, req.params.endingMonth);
-    cube_prom.then((cube,err)=>{
-      console.log(cube.rows);
-      cube = getCubeDataByUser(req.params.emailUser, cube);
-      console.log(cube.rows);
-      if(cube !== null){
-        var sol = new Table({
-          dimensions: cube.dimensions,
-          fields: cube.fields,
-          points: cube.points,
-          data: cube.data
-        });
-        resolve(sol);
-      }
-      else{
-        reject("Cubo nulo");
-      }
-    })
+    if(Number(req.params.startingMonth) > Number(req.params.endingMonth)){
+      reject("Incorrect period. The starting month must be lower than the ending month.");
+    }
+    else if (req.params.startingMonth < 1){
+      reject("Incorrect starting month. This one must be greater or equal to 1.");
+    }
+    else if ((req.params.endingMonth > 36)){
+      reject("Incorrect ending month. This one must be lower or equal to 36.");
+    }
+    else{
+      var cube_prom = getCubeDataByInterval(req.params.startingMonth, req.params.endingMonth);
+      cube_prom.then((cube,err)=>{
+        console.log(cube.rows);
+        cube = getCubeDataByUser(req.params.emailUser, cube);
+        console.log(cube.rows);
+        if(cube !== null){
+          var sol = new Table({
+            dimensions: cube.dimensions,
+            fields: cube.fields,
+            points: cube.points,
+            data: cube.data
+          });
+          resolve(sol);
+        }
+        else{
+          reject("Cubo nulo");
+        }
+      });
+    }
   });
   promise.then((cube)=>{
     var jsonToReturn = {structure: cube, values: cube.rows}
@@ -229,30 +241,44 @@ exports.getCubeDataByComparisonAndMonths = function(req, res){
   const initialValue = [0];
 
   var promise = new Promise(function(resolve, reject){
-    var cube_prom = getCubeDataByInterval(req.params.startingMonth, req.params.endingMonth);
-    cube_prom.then((cube,err)=>{
+    if(Number(req.params.startingMonth) > Number(req.params.endingMonth)){
+      reject("Incorrect period. The starting month must be lower than the ending month.");
+    }
+    else if (req.params.startingMonth < 1){
+      reject("Incorrect starting month. This one must be greater or equal to 1.");
+    }
+    else if ((req.params.endingMonth > 36)){
+      reject("Incorrect ending month. This one must be lower or equal to 36.");
+    }
+    else{
+      var cube_prom = getCubeDataByInterval(req.params.startingMonth, req.params.endingMonth);
+      cube_prom.then((cube,err)=>{
 
-      if(!(req.params.condition in map)){
-        reject("Comparison operator not valid. Valid ones: gte, gt, eq, lte, lt.");
-      }
-      else{
-        comparisonOperator = req.params.condition;
-        let cubeRolledUp = cube.rollup('explorer', ['totalSpent'], summation, initialValue);
-        comparisonFunction = map[comparisonOperator];
-        let cubeRolledUpFiltered = cubeRolledUp.rows.filter((row) => {
-          return comparisonFunction(row[1]);
-        });
-        console.log(cubeRolledUpFiltered);
-        
-        if(cubeRolledUpFiltered !== null){
-          sol = cubeRolledUpFiltered;
-          resolve(sol);
+        if(!(req.params.condition in map)){
+          reject("Comparison operator not valid. Valid ones: gte, gt, eq, lte, lt.");
+        }
+        else if(amount < 0){
+          reject("Amount must be a positive quantity.");
         }
         else{
-          reject("Cubo nulo");
+          comparisonOperator = req.params.condition;
+          let cubeRolledUp = cube.rollup('explorer', ['totalSpent'], summation, initialValue);
+          comparisonFunction = map[comparisonOperator];
+          let cubeRolledUpFiltered = cubeRolledUp.rows.filter((row) => {
+            return comparisonFunction(row[1]);
+          });
+          console.log(cubeRolledUpFiltered);
+          
+          if(cubeRolledUpFiltered !== null){
+            sol = cubeRolledUpFiltered;
+            resolve(sol);
+          }
+          else{
+            reject("Cubo nulo");
+          }
         }
-      }
-    })
+      });
+    }
   });
   promise.then((cube)=>{
     var jsonToReturn = {structure: cube, values: cube.rows}
@@ -263,13 +289,6 @@ exports.getCubeDataByComparisonAndMonths = function(req, res){
   });
 }
 
-/*function getCubeDataByIntervalYears(){
-
-}
-
-function getCubeDataByComparisonMoney(){
-
-}*/
 /*------------------Cubo(End)---------------------------------*/
 
 
@@ -283,15 +302,16 @@ var CronTime = require('cron').CronTime;
 //'*/10 * * * * *' cada 10 segundos
 //'* * * * * *' cada segundo
 var rebuildPeriod = '*/10 * * * * *';  //El que se usará por defecto
+var rebuildPeriodForCube = '0 0 0 */1 * *';  //'0 0 0 */1 * *' Correct period. Once every midnight 00:00 AM.
 var computeDataWareHouseJob;
 var cubeComputation;
 
 exports.rebuildPeriod = function(req, res) {
-  console.log('Updating rebuild period. Request: period:'+req.query.rebuildPeriod);
+  //console.log('Updating rebuild period. Request: period:'+req.query.rebuildPeriod);
   rebuildPeriod = req.query.rebuildPeriod;
   computeDataWareHouseJob.setTime(new CronTime(rebuildPeriod));
   computeDataWareHouseJob.start();
-  cubeComputation.setTime(new CronTime(rebuildPeriod));
+  cubeComputation.setTime(new CronTime(rebuildPeriodForCube));
   cubeComputation.start();
 
   res.json(req.query.rebuildPeriod);
@@ -301,7 +321,7 @@ function createDataWareHouseJob(){
       computeDataWareHouseJob = new CronJob(rebuildPeriod,  function() {
       
       var new_dataWareHouse = new DataWareHouse();
-      console.log('Cron job submitted. Rebuild period: '+rebuildPeriod);
+      //console.log('Cron job submitted. Rebuild period: '+rebuildPeriod);
       async.parallel([
         computeTripsPerManager,
         computeApplicationsPerTrip,
@@ -335,7 +355,7 @@ function createDataWareHouseJob(){
       });
     }, null, true, 'Europe/Madrid');
 
-    cubeComputation = new CronJob(rebuildPeriod,  function() { //'0 0 0 */1 * *' Correct period. Once every midnight 00:00 AM.
+    cubeComputation = new CronJob(rebuildPeriodForCube,  function() { 
       async.parallel([
         getInformationCube
       ], function (err, result) {
@@ -351,8 +371,7 @@ function createDataWareHouseJob(){
               new_cube.cube = creatingCube(result[0]);
               new_cube.points = new_cube.cube.points;
               new_cube.data = new_cube.cube.data;
-              //new_cube.data.map(dato => console.log(new_cube.data.indexOf(dato)));
-              // ToDo: Quitar el id del cubo, que parece cambiar y no se deja cambiar. new_cube._id
+
               new_cube.save(function(err, cube){
                 if(err){
                   console.log("Err on saving cube: " + err);
@@ -363,15 +382,6 @@ function createDataWareHouseJob(){
               });
             }
           });
-          /*
-          Cube.updateOne({idCubo: 1}, new_cube, {upsert: true}, function(err, cube){
-            if (err){
-              console.log("Error saving cube: " + err);
-            }
-            else{
-              console.log("new Cube succesfully saved. Date: " + new Date());
-            }
-          });*/
         }
       });
     }, null, true, 'Europe/Madrid');

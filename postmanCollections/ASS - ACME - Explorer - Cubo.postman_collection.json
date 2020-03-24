@@ -1,0 +1,60 @@
+{
+	"info": {
+		"_postman_id": "21e6f61d-b642-48bd-a7eb-77f9f492e4a9",
+		"name": "ASS - ACME - Explorer DataWareHouse",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Cubo",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/v1/dataWareHouse/latest/cube/emailActor52@gmail.com/11/3",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"dataWareHouse",
+						"latest",
+						"cube",
+						"emailActor52@gmail.com",
+						"11",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cubo Comparison",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/v1/dataWareHouse/latest/cube/byCondition/gt/0/1/11",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"dataWareHouse",
+						"latest",
+						"cube",
+						"byCondition",
+						"gt",
+						"0",
+						"1",
+						"11"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

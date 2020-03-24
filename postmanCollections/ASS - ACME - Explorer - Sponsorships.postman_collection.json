@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "262b3805-bf4e-4b9d-af25-a0be11c3090f",
-		"name": "ACME-Explorer-Sponsorships",
+		"name": "ASS - ACME - Explorer Sponsorships",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -19,7 +19,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"banner\": \"No aun\",\n\t\"link\": \"No aun\",\n\t\"sponsor\": \"5e4d890345dd27745b5f6e81\",\n\t\"tripSponsorships\": [{\"trip\":\"5e52755ba9be7b1c51e2d890\"}]\n}",
+					"raw": "{\n\t\"banner\": \"No postman\",\n\t\"link\": \"No aun\",\n\t\"sponsor\": \"5e4d890345dd27745b5f6e81\",\n\t\"tripSponsorships\": [{\"trip\":\"5e52755ba9be7b1c51e2d890\"}]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -65,7 +65,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/v1/sponsorships/5e52a1650dbb8025b420b713",
+					"raw": "localhost:8080/v1/sponsorships/5e7892eac2b9410311c48071",
 					"host": [
 						"localhost"
 					],
@@ -73,7 +73,7 @@
 					"path": [
 						"v1",
 						"sponsorships",
-						"5e52a1650dbb8025b420b713"
+						"5e7892eac2b9410311c48071"
 					]
 				}
 			},
@@ -101,27 +101,6 @@
 			"response": []
 		},
 		{
-			"name": "Get Sponsorships Trip",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/v1/sponsorships/trips/5e52755ba9be7b1c51e2d867",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"v1",
-						"sponsorships",
-						"trips",
-						"5e52755ba9be7b1c51e2d867"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "Update Sponsorship",
 			"request": {
 				"method": "PUT",
@@ -143,7 +122,7 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/v1/sponsorships/5e52a1650dbb8025b420b713",
+					"raw": "localhost:8080/v1/sponsorships/5e7892eac2b9410311c48071",
 					"host": [
 						"localhost"
 					],
@@ -151,7 +130,7 @@
 					"path": [
 						"v1",
 						"sponsorships",
-						"5e52a1650dbb8025b420b713"
+						"5e7892eac2b9410311c48071"
 					]
 				}
 			},
@@ -163,7 +142,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/v1/sponsorships/5e52a1650dbb8025b420b713",
+					"raw": "localhost:8080/v1/sponsorships/5e7892eac2b9410311c48071",
 					"host": [
 						"localhost"
 					],
@@ -171,7 +150,7 @@
 					"path": [
 						"v1",
 						"sponsorships",
-						"5e52a1650dbb8025b420b713"
+						"5e7892eac2b9410311c48071"
 					]
 				}
 			},
@@ -183,7 +162,7 @@
 				"method": "PUT",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/v1/sponsorships/5e5ce5f8abfe8f5cd395333d/5e52755ba9be7b1c51e2d890/pay",
+					"raw": "localhost:8080/v1/sponsorships/5e7893886f495803dd3be93d/5e52755ba9be7b1c51e2d890/pay",
 					"host": [
 						"localhost"
 					],
@@ -191,9 +170,30 @@
 					"path": [
 						"v1",
 						"sponsorships",
-						"5e5ce5f8abfe8f5cd395333d",
+						"5e7893886f495803dd3be93d",
 						"5e52755ba9be7b1c51e2d890",
 						"pay"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Sponsorships Trip(Must be paid)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/v1/sponsorships/trips/5e52755ba9be7b1c51e2d890",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"sponsorships",
+						"trips",
+						"5e52755ba9be7b1c51e2d890"
 					]
 				}
 			},

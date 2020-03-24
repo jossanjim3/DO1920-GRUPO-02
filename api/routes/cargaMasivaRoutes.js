@@ -6,6 +6,6 @@ module.exports = function (app){
 
     app.route('/v1/cargaMasiva/:numActors/:numTrips/:numApplis')
         // load all the data example
-        .get(cargaMasiva.loadData)        
+        .post(cargaMasiva.loadData)        
 
 }

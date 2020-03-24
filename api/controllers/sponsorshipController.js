@@ -5,16 +5,6 @@ var mongoose = require('mongoose'),
     Sponsorship = require('../models/sponsorshipModel');
 
 exports.list_all_sponsorships = function(req, res){
-    //Check if the role param exist
-    /*var roleName;
-
-    if(req.query.role){
-        roleName=req.query.role;
-    }
-
-    if(!roleName.contains('SPONSOR'))
-        res.status(403).json({message: 'The actor must be a sponsor.'})
-    */
     Sponsorship.find({},function(err, sponsorships){
         if(err){
             res.status(500).send(err);
@@ -26,18 +16,14 @@ exports.list_all_sponsorships = function(req, res){
 
 exports.create_a_sponsorship = function(req, res){
     var new_sponsorship = new Sponsorship(req.body);
-    /*if(!new_sponsorship.actor.role.includes("SPONSOR")){
-        res.status(422).json({message: "In order to manage a sponsorship, the actor needs to be a sponsor."})
-    }*/
-    //else{
-        new_sponsorship.save(function(err, sponsorship){
-            if(err){
-                res.status(500).send(err);
-            } else {
-                res.status(201).json(sponsorship);
-            }
-        });
-    //}
+
+    new_sponsorship.save(function(err, sponsorship){
+        if(err){
+            res.status(500).send(err);
+        } else {
+            res.status(201).json(sponsorship);
+        }
+    });
 };
 
 exports.find_a_sponsorship = function(req, res){

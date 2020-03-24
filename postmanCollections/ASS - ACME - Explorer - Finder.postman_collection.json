@@ -1,0 +1,300 @@
+{
+	"info": {
+		"_postman_id": "66ab7aac-a02f-46ed-b566-e999c308a312",
+		"name": "ASS - ACME - Explorer Finder",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "All Finders",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/v1/finders",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"finders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Explorer Finder",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/v1/finders/explorers/5e77a766185e0c05a0dbfc23",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"finders",
+						"explorers",
+						"5e77a766185e0c05a0dbfc23"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create or Update Finder of Actor",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"keyword\": \"Hawai\",\n\t\"minDate\": \"2021\",\n\t\"maxDate\": \"2022\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/v1/finders/explorers/5e77a766185e0c05a0dbfc23",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"finders",
+						"explorers",
+						"5e77a766185e0c05a0dbfc23"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create or Update Finder of Actor Should Return 200",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"keyword\": \"Hawai\",\n\t\"minDate\": \"2021\",\n\t\"maxDate\": \"2022\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/v1/finders/explorers/5e787afc55ec850d1e073658",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"finders",
+						"explorers",
+						"5e787afc55ec850d1e073658"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create or Update Finder of Actor Change 201",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"keyword\": \"Hawai\",\n\t\"minDate\": \"2021\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/v1/finders/explorers/5e787afc55ec850d1e073658",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"finders",
+						"explorers",
+						"5e787afc55ec850d1e073658"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create or Update Finder of Actor Null 201",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/v1/finders/explorers/5e77a766185e0c05a0dbfc23",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"finders",
+						"explorers",
+						"5e77a766185e0c05a0dbfc23"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create or Update Finder of Actor Error Date",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"keyword\": \"Hawai\",\n\t\"minDate\": \"2022\",\n\t\"maxDate\": \"2021\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/v1/finders/explorers/5e787afc55ec850d1e073658",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"finders",
+						"explorers",
+						"5e787afc55ec850d1e073658"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create or Update Finder of Actor Error Price",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"keyword\": \"Hawai\",\n\t\"minPrice\": \"100\",\n\t\"maxPrice\": \"50\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/v1/finders/explorers/5e787afc55ec850d1e073658",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"finders",
+						"explorers",
+						"5e787afc55ec850d1e073658"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Remove Finder of Actor",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/v1/finders/explorers/5e787afc55ec850d1e073658",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"finders",
+						"explorers",
+						"5e787afc55ec850d1e073658"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

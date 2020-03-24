@@ -18,6 +18,7 @@ module.exports = function (app){
         // delete an application. Currently an application cannot be deleted!
         .delete(applications.delete_an_application);  
 
+    /* V2 */
     app.route('/v2/applications/:applicationId')
         // update an application status
         .put(authController.verifyUser(["EXPLORER","MANAGER"]), applications.update_an_application_authorized)
@@ -26,6 +27,7 @@ module.exports = function (app){
         // update an application status to rejected by manager or cancelled by explorer
         .put(applications.cancel_an_application);
 
+    /* V2 */
     app.route('/v2/applications/:applicationId/cancel')
         // update an application status to rejected by manager or cancelled by explorer
         .put(authController.verifyUser(["EXPLORER","MANAGER"]), applications.cancel_an_application_authorized);

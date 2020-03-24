@@ -6,25 +6,6 @@
 	},
 	"item": [
 		{
-			"name": "GET trips",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/v1/trips",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"v1",
-						"trips"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "POST a trip",
 			"request": {
 				"method": "POST",
@@ -250,6 +231,105 @@
 						"trips",
 						"manager",
 						"5e47fcb3aed9531440793134"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Trips search validación fechas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/v1/trips/search?keyword=hawai&maxDate=2020-9-30&minDate=2020-11-15",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"trips",
+						"search"
+					],
+					"query": [
+						{
+							"key": "keyword",
+							"value": "hawai"
+						},
+						{
+							"key": "maxDate",
+							"value": "2020-9-30"
+						},
+						{
+							"key": "minDate",
+							"value": "2020-11-15"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Trips search validatión Price",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/v1/trips/search?minPrice=500&maxPrice=100",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"trips",
+						"search"
+					],
+					"query": [
+						{
+							"key": "minPrice",
+							"value": "500"
+						},
+						{
+							"key": "maxPrice",
+							"value": "100"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Carga masiva",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/v1/storage/fs?dbURL=mongodb://myUserExplorer:myUserExplorerPassword@localhost:27017/ACME-Explorer&collection=trips&sourceFile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"storage",
+						"fs"
+					],
+					"query": [
+						{
+							"key": "dbURL",
+							"value": "mongodb://myUserExplorer:myUserExplorerPassword@localhost:27017/ACME-Explorer"
+						},
+						{
+							"key": "collection",
+							"value": "trips"
+						},
+						{
+							"key": "sourceFile",
+							"value": null
+						}
 					]
 				}
 			},

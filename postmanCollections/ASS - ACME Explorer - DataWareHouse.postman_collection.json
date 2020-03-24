@@ -1,0 +1,78 @@
+{
+	"info": {
+		"_postman_id": "09ab9377-e89e-409e-ab66-d2d5a9f3b200",
+		"name": "ASS - ACME Explorer - DataWareHouse",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get all indicators ",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/v1/dataWareHouse",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"dataWareHouse"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Change rebuild Period",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8080/v1/dataWareHouse?rebuildPeriod=0 0 * * * *",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"dataWareHouse"
+					],
+					"query": [
+						{
+							"key": "rebuildPeriod",
+							"value": "0 0 * * * *"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get list of last computed indicator",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/v1/dataWareHouse/latest",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"dataWareHouse",
+						"latest"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
