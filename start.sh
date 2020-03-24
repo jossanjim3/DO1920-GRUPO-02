@@ -1,4 +1,4 @@
-BASE_SITE=do1920.com
+BASE_SITE=acmeexplorer.com
 
 #development
 export NODE_ENV=development
@@ -7,7 +7,7 @@ export DBPORT=27017
 export VIRTUAL_HOST=${NODE_ENV}.${BASE_SITE}
 export MONGO_USER=userMongoExplorer
 export MONGO_PWD=userMongoExplorerPass
-docker-compose -p ${VIRTUAL_HOST} up -d 
+docker-compose -p ${VIRTUAL_HOST} up -d --build
 
 #production
 export NODE_ENV=production
