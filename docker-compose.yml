@@ -4,6 +4,8 @@ services:
     build: .
     ports:
       - "127.0.0.1:${PORT}:${PORT}"
+    networks: 
+      service-tier:
     depends_on: 
       - mongo
     restart: on-failure
@@ -23,14 +25,18 @@ services:
     expose: 
       - ${DBPORT}
     command: --port ${DBPORT} --logpath /var/log/mongodb/mongodb.log
+    networks:
+      service-tier:
+          aliases: 
+              - "mongo${DBPORT}"
     volumes:
       - "datavol:/data/db"
       - "logsvol:/var/log/mongodb"
 volumes:
   datavol:
   logsvol:
+    external: true
 
 networks: 
-  default:
-    external: 
-      name: service-tier
+  service-tier:
+    external: true
