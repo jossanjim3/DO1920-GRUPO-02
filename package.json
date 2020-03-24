@@ -37,7 +37,8 @@
     "node-fetch": "^2.6.0",
     "nodemon": "^2.0.2",
     "olap-cube": "^1.0.0",
-    "stream-to-mongo-db": "^1.6.0"
+    "stream-to-mongo-db": "^1.6.0",
+    "winston": "^3.2.1"
   },
   "devDependencies": {
     "chai": "^4.2.0",
