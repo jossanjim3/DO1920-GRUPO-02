@@ -1,3 +1,5 @@
+var logger = require('../../logger');
+
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt');
 var Schema = mongoose.Schema;
@@ -76,9 +78,9 @@ ActorSchema.pre('save', function(callback) {
 
 ActorSchema.methods.verifyPassword = function(password, cb) {
     bcrypt.compare(password, this.password, function(err, isMatch) {
-    console.log('verifying password in actorModel: '+password);
+    logger.info('verifying password in actorModel: '+password);
     if (err) return cb(err);
-    console.log('iMatch: '+isMatch);
+    logger.info('iMatch: '+isMatch);
     cb(null, isMatch);
   });
 

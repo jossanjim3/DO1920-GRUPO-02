@@ -1,5 +1,7 @@
 'use strict';
 
+var logger = require('../../logger');
+
 exports.store_json_insertMany = function(req, res) {
   //var dbURL, collection, sourceURL, batchSize, parseString = null;
   var mongooseModel, sourceFile = null;
@@ -16,14 +18,14 @@ exports.store_json_insertMany = function(req, res) {
       collectionModel = mongoose.model(mongooseModel);
 
     // where the data will end up
-    console.log('inserting the json from file: '+sourceFile+', into the Model: '+mongooseModel);
+    logger.info('inserting the json from file: '+sourceFile+', into the Model: '+mongooseModel);
     collectionModel.insertMany(json, function(err,result) {
       if (err) {
-        console.log(err);
+        logger.info(err);
       res.send(err);
       } else {
         response+= 'All documents stored in the collection!';
-        console.log(response);
+        logger.info(response);
         res.send(response);
       }
    });
@@ -31,7 +33,7 @@ exports.store_json_insertMany = function(req, res) {
   else {
     if (req.query.mongooseModel == null) response+='A mandatory mongooseModel parameter is missed.\n';
     if (req.query.sourceFile == null) response+='A mandatory sourceFile parameter is missed.\n';
-    console.log(response);
+    logger.info(response);
     res.send(response);
   } 
   
@@ -60,17 +62,17 @@ exports.store_json_fs = function(req, res) {
     const writableStream = streamToMongoDB(outputDBConfig);
   
     // create readable stream and consume it
-    console.log('starting streaming the json from file: '+sourceFile+', to dbURL: '+dbURL+ ', into the collection: '+collection);
+    logger.info('starting streaming the json from file: '+sourceFile+', to dbURL: '+dbURL+ ', into the collection: '+collection);
     fs.createReadStream(sourceFile) // './myJsonData.json'
       .pipe(JSONStream.parse(parseString))
       .pipe(writableStream)
       .on('finish', function(){
         response+= 'All documents stored in the collection!';
-        console.log(response);
+        logger.info(response);
         res.send(response);
       })
       .on('error', function(err){
-      console.log(err);
+      logger.info(err);
       res.send(err);
       })
   } 
@@ -78,7 +80,7 @@ exports.store_json_fs = function(req, res) {
     if (req.query.dbURL == null) response+='A mandatory dbURL parameter is missed.\n';
     if (req.query.collection == null) response+='A mandatory collection parameter is missed.\n';
     if (req.query.sourceFile == null) response+='A mandatory sourceFile parameter is missed.\n';
-    console.log(response);
+    logger.info(response);
     res.send(response);
   } 
   

@@ -1,4 +1,6 @@
 'use strict';
+var logger = require('../../logger');
+
 /*---------------ACTOR----------------------*/
 var mongoose = require('mongoose'),
 bcrypt = require('bcrypt'),
@@ -102,9 +104,9 @@ exports.update_an_actor = function(req,res){
 exports.modify_actor_validation = function(req, res) {
     
     if (req.body.validated==true){
-        console.log("Validating an actor with id: "+req.params.actorId)
+        logger.info("Validating an actor with id: "+req.params.actorId)
     }else{
-        console.log("Invalidating an actor with id: "+req.params.actorId)
+        logger.info("Invalidating an actor with id: "+req.params.actorId)
     }
 
     Actor.findOneAndUpdate({_id: req.params.actorId},  { $set: {"validated":req.body.validated }}, {new: true}, function(err, actor) {
@@ -135,7 +137,7 @@ exports.updateFinder = function(req, res) {
 //Authenticated version V2:
 
 exports.login_an_actor = async function(req, res) {
-    console.log('starting login an actor');
+    logger.info('starting login an actor');
     var emailParam = req.query.email;
     var password = req.query.password;
     Actor.findOne({ email: emailParam }, function (err, actor) {
@@ -152,10 +154,10 @@ exports.login_an_actor = async function(req, res) {
         else if (actor.validated == false) {
           res.status(403); //an access token is valid, but requires more privileges: to be validated
           res.json({message: 'forbidden',error: err});
-          console.log('The actor is not validated');
+          logger.info('The actor is not validated');
         }else{
           // Make sure the password is correct
-          //console.log('En actor Controller pass: '+password);
+          //logger.info('En actor Controller pass: '+password);
           actor.verifyPassword(password, async function(err, isMatch) {
             if (err) {
               res.send(err);
@@ -171,10 +173,10 @@ exports.login_an_actor = async function(req, res) {
                 try{
                   var customToken = await admin.auth().createCustomToken(actor.email);
                 } catch (error){
-                  console.log("Error creating custom token:", error);
+                  logger.info("Error creating custom token:", error);
                 }
                 actor.customToken = customToken;
-                console.log('Login Success... sending JSON with custom token');
+                logger.info('Login Success... sending JSON with custom token');
                 res.json(actor);
             }
         });

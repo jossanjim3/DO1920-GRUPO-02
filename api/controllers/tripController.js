@@ -1,5 +1,7 @@
 'use strict';
 
+var logger = require('../../logger');
+
 var mongoose = require('mongoose'),
 Trip = mongoose.model('Trips')
 
@@ -97,8 +99,8 @@ exports.search_trips = function(req,res){
     if(req.query.sortedBy){
       sort+=req.query.sortedBy;
     }
-    //console.log("Query: "+query.toString()+" Skip:" + skip+" Limit:" + limit+" Sort:" + sort);
-    //console.log(query);
+    //logger.info("Query: "+query.toString()+" Skip:" + skip+" Limit:" + limit+" Sort:" + sort);
+    //logger.info(query);
     if(!error){
         Trip.find(query)
         .sort(sort)
@@ -106,14 +108,14 @@ exports.search_trips = function(req,res){
         .limit(limit)
         .lean()
         .exec(function(err, trips){
-      //console.log('Start searching trips');
+      //logger.info('Start searching trips');
       if (err){
         res.send(err);
       }
       else{
         res.json(trips);
       }
-      //console.log('End searching trips');
+      //logger.info('End searching trips');
     });
     }
 }

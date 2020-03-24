@@ -1,5 +1,7 @@
 'use strict';
 
+var logger = require('../../logger');
+
 var mongoose = require('mongoose'),
     Application = mongoose.model('Applications');
 
@@ -148,7 +150,7 @@ exports.read_an_application = function(req,res){
  */ 
 exports.update_an_application = function(req,res){
 
-    //console.log(req.params.applicationId);
+    //logger.info(req.params.applicationId);
     // check if the user logged has role Explorer or Manager -> se route update_an_application_authorized
     Application.findById({_id : req.params.applicationId}, function(err, appli) {
         if (err){
@@ -248,7 +250,7 @@ exports.delete_an_application = function(req,res){
  */  
 exports.update_an_application_authorized = function(req,res){
 
-    //console.log(req.params.applicationId);
+    //logger.info(req.params.applicationId);
 
     // check if the user logged has role Explorer or Manager
     Application.findById({_id : req.params.applicationId}, function(err, appli) {
