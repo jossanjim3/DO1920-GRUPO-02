@@ -1,4 +1,5 @@
-BASE_SITE=acmeexplorer.com
+echo $1
+BASE_SITE=$1
 
 #development
 export NODE_ENV=development
