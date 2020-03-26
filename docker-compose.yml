@@ -12,7 +12,7 @@ services:
     environment: 
       - NODE_ENV=${NODE_ENV}
       - PORT=${PORT}
-      - DBPORT=${DBPORT}
+      - mongoDBPort=${DBPORT}
       - VIRTUAL_HOST=${VIRTUAL_HOST}
       - VIRTUAL_PORT=${PORT}
       - mongoDBHostname=mongo
@@ -23,10 +23,6 @@ services:
     expose: 
       - ${DBPORT}
     command: --port ${DBPORT} --logpath /var/log/mongodb/mongodb.log
-    networks:
-      service-tier:
-          aliases: 
-              - "mongo${DBPORT}"
     volumes:
       - "datavol:/data/db"
       - "logsvol:/var/log/mongodb"
@@ -36,5 +32,6 @@ volumes:
     external: true
 
 networks: 
-  service-tier:
-    external: true
+  default:
+    external: 
+      name: service-tier
