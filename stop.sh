@@ -1,4 +1,4 @@
-BASE_SITE=do1920.com
+BASE_SITE=acmeexplorer.com
 
 #development
 export NODE_ENV=development
