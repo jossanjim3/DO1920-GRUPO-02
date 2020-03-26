@@ -1,5 +1,7 @@
 'use strict';
 
+var logger = require('../../logger');
+
 var mongoose = require('mongoose'),
     Actor = mongoose.model('Actors'),
     Trip = mongoose.model('Trips'),
@@ -113,15 +115,15 @@ async function agregarNuevosTrips(countTri,numNewTrips){
     for (var i = 0; i <= numNewTrips-1; i++) {
 
         const startDate = await randomDate(new Date(2020, 0, 1), new Date(2021,0,1));   
-        //console.log("startDate1:" + startDate.toDateString());
+        //logger.info("startDate1:" + startDate.toDateString());
 
         var numberToIncrement = Math.floor(Math.random()*30 + 1);
-        //console.log("numberToIncrement: " + numberToIncrement);
+        //logger.info("numberToIncrement: " + numberToIncrement);
 
         var endDate   = await randomDate(startDate, new Date(2021, 0, 1));
 
-        //console.log("startDate2:" + startDate.toDateString());
-        //console.log("endDate:" + endDate.toDateString());
+        //logger.info("startDate2:" + startDate.toDateString());
+        //logger.info("endDate:" + endDate.toDateString());
 
         var randomNumber = Math.floor(Math.random()*managersBBDD.length);
 
@@ -167,7 +169,7 @@ async function agregarNuevasApplications(countAppli,numNewApplis){
     var newApplissArray = [];
     var explorerBBDD = await getExplorers();
     var tripsBBDD = await getTrips();
-    //console.log(tripsBBDD.length);
+    //logger.info(tripsBBDD.length);
 
     for (var i = 0; i <= numNewApplis-1; i++) {
 
@@ -204,19 +206,19 @@ exports.loadData = async (req,res) => {
     const numNewTrips  = req.params.numTrips;
     const numNewApplis = req.params.numApplis;
 
-    console.log("numNewActors: " + numNewActors + ", numNewTrips: " + numNewTrips + ", numNewApplis: " + numNewApplis);
+    logger.info("numNewActors: " + numNewActors + ", numNewTrips: " + numNewTrips + ", numNewApplis: " + numNewApplis);
     
     var countAct = await countActors();
-    //console.log("countAct:" + countAct);
+    //logger.info("countAct:" + countAct);
 
     var countTri = await countTrips();
-    //console.log("countTri:" + countTri);
+    //logger.info("countTri:" + countTri);
 
     var countAppli= await countApplications();
-    //console.log("countAppli:" + countAppli);
+    //logger.info("countAppli:" + countAppli);
 
     var totalInicio = "ActorIni: " + countAct + ", TripsIni: " + countTri + ", ApplicationsIni: " + countAppli;
-    console.log(totalInicio);
+    logger.info(totalInicio);
 
     /* --------------------------------------- */
     /* AGREGO NUEVOS ACTORES */
@@ -234,7 +236,7 @@ exports.loadData = async (req,res) => {
 
     // managers en bbdd
     var countMan = await countManagers();
-    //console.log("countMan:" + countMan);
+    //logger.info("countMan:" + countMan);
 
     // si hay viajes nuevos por insertar y hay actores en bbdd
     if (numNewTrips > 0 && countMan > 0){
@@ -249,7 +251,7 @@ exports.loadData = async (req,res) => {
 
     // explorers en bbdd
     var countExplo = await countExplorers();
-    //console.log("countExplo:" + countExplo);
+    //logger.info("countExplo:" + countExplo);
 
     // si hay viajes nuevos por insertar y hay actores en bbdd
     if (numNewApplis > 0 && countExplo > 0){
@@ -264,7 +266,7 @@ exports.loadData = async (req,res) => {
     countAppli= await countApplications();
 
     var resultadoTotal = "ActorsTotal: " + countAct + ", TripsTotal: " + countTri + ", ApplicationsTotal: " + countAppli;
-    console.log(resultadoTotal);
+    logger.info(resultadoTotal);
 
     await res.status(200).json(totalInicio + " ----- " + resultadoTotal);
 

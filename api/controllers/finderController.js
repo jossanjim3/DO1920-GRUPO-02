@@ -1,4 +1,7 @@
 'use strict';
+
+var logger = require('../../logger');
+
 /*---------------FINDER----------------------*/
 var mongoose = require('mongoose'),
     Finder = require('../models/finderModel'),
@@ -57,12 +60,12 @@ var timestampUnderLimit = function(finder){
     return new Promise((resolve,reject)=>{
         configModel.findOne({}, (err, config) => {
             var currentTime = new Date();
-            console.log(finder.timestamp);
+            logger.info(finder.timestamp);
             var timeToCompare = new Date(finder.timestamp);
     
             maxTimeAResultIsStored = config.max_number_hours_finder_stored;
             timeToCompare = timeToCompare.setHours(timeToCompare.getHours() + maxTimeAResultIsStored);
-            console.log("Comparacion: " + timeToCompare + " y " + currentTime.getTime());
+            logger.info("Comparacion: " + timeToCompare + " y " + currentTime.getTime());
     
             resolve(timeToCompare > currentTime.getTime());
         });
@@ -77,11 +80,11 @@ var checkEquality = function(finder, body){
         }
         else{
             if(attr === "minDate" || attr === "maxDate"){
-                console.log("Comparacion fechas: " + new Date(finder[attr]) + " y " + new Date(body[attr]));
+                logger.info("Comparacion fechas: " + new Date(finder[attr]) + " y " + new Date(body[attr]));
                 return ((new Date(finder[attr])).getTime() === (new Date(body[attr])).getTime());
             }
             else{
-                console.log("Comparacion atributos: " + finder[attr] + " y " + body[attr]);
+                logger.info("Comparacion atributos: " + finder[attr] + " y " + body[attr]);
                 return finder[attr] === body[attr];
             }
         }
@@ -119,14 +122,14 @@ exports.finder_of_actor = function(req, res){
         else{
             if(finder !== null){
                 timestampUnderLimit(finder).then((timestampCheck,err) => {
-                    console.log(finder);
-                    console.log(finder !== null)
+                    logger.info(finder);
+                    logger.info(finder !== null)
                     if(timestampCheck) {
-                        console.log("Llego a devolver");
+                        logger.info("Llego a devolver");
                         res.status(200).json(finder);
                     }
                     else{
-                        console.log("No se encuentra resultado");
+                        logger.info("No se encuentra resultado");
                         res.status(200).json([]);
                     }
                 });
@@ -143,12 +146,12 @@ exports.update_finder = function(req, res) {
         return response.json();
     }).then(finder => {
         var equalityBetweenFinderAndBody = checkEquality(finder, req.body);
-        console.log("Tercera comparacion: " + attrToCheck.every(equalityBetweenFinderAndBody))
+        logger.info("Tercera comparacion: " + attrToCheck.every(equalityBetweenFinderAndBody))
         if(attrToCheck.every(equalityBetweenFinderAndBody)){
             timestampUnderLimit(finder).then((timestampCheck,err) => {
                 if(timestampCheck && 
                 attrToCheck.every(equalityBetweenFinderAndBody)){
-                    console.log("Devolviendo finder almacenado.");
+                    logger.info("Devolviendo finder almacenado.");
                     res.status(200).json(finder);
                 }
             });
@@ -216,7 +219,7 @@ exports.remove_finder_auth = function(req, res){
             res.status(500).send(err);
         }
         else{
-            console.log('actor: '+actor); 
+            logger.info('actor: '+actor); 
             Finder.FinderModel.remove({_id: req.params.id}, function(err, finder){
                 if(err){
                     res.status(500).send(err);
@@ -236,7 +239,7 @@ exports.finder_of_actor_auth = function(req, res){
             res.status(500).send(err);
         }
         else{
-            console.log('actor: '+actor); 
+            logger.info('actor: '+actor); 
             Finder.FinderModel.findOne({explorer: req.params.actorId}, function(err, finder){
                 if(err){
                     res.status(500).send(err);
@@ -244,11 +247,11 @@ exports.finder_of_actor_auth = function(req, res){
                 else{
                     timestampUnderLimit(finder).then((timestampCheck,err) => {
                         if(finder !== null && timestampCheck) {
-                            console.log("Llego a devolver");
+                            logger.info("Llego a devolver");
                             res.status(200).json(finder);
                         }
                         else{
-                            console.log("No se encuentra resultado");
+                            logger.info("No se encuentra resultado");
                             res.status(200).json([]);
                         }
                     });
@@ -266,28 +269,28 @@ exports.update_finder_auth = function(req, res) {
             res.status(500).send(err);
         }
         else{
-            console.log('actor: '+actor); 
+            logger.info('actor: '+actor); 
             if (userId == req.params.actorId){
                 var url = "http://localhost:" + (process.env.PORT || 8080) + "/v1/finders/explorers/" + req.params.actorId;
                 fetch(url,{
                     method: 'GET',
                 }).then(response => {
-                    console.log("Primer then");
+                    logger.info("Primer then");
                     if(response.json.hasOwnProperty('message')){
-                        console.log("Json es nulo");
+                        logger.info("Json es nulo");
                         return null;
                     }
                     else{
-                        console.log("Devuelvo json");
+                        logger.info("Devuelvo json");
                         return response.json();
                     }     
                 }).then(finder => {
                     var equalityBetweenFinderAndBody = checkEquality(finder, req.body);
-                    console.log("Tercera comparacion: " + attrToCheck.every(equalityBetweenFinderAndBody))
+                    logger.info("Tercera comparacion: " + attrToCheck.every(equalityBetweenFinderAndBody))
                     timestampUnderLimit(finder).then((timestampCheck,err) => {
                         if(timestampCheck && 
                         attrToCheck.every(equalityBetweenFinderAndBody)){
-                        console.log("Devolviendo finder almacenado.");
+                        logger.info("Devolviendo finder almacenado.");
                         res.status(200).json(finder);
                     }
                     else{

@@ -12,7 +12,7 @@ services:
     environment: 
       - NODE_ENV=${NODE_ENV}
       - PORT=${PORT}
-      - DBPORT=${DBPORT}
+      - mongoDBPort=${DBPORT}
       - VIRTUAL_HOST=${VIRTUAL_HOST}
       - VIRTUAL_PORT=${PORT}
       - mongoDBHostname=mongo
@@ -29,6 +29,7 @@ services:
 volumes:
   datavol:
   logsvol:
+    external: true
 
 networks: 
   default:

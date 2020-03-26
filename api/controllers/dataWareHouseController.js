@@ -1,3 +1,5 @@
+var logger = require('../../logger');
+
 var async = require("async");
 var mongoose = require('mongoose'),
   DataWareHouse = mongoose.model('DataWareHouse'),
@@ -10,7 +12,7 @@ var mongoose = require('mongoose'),
 var Table = require('olap-cube').model.Table
 
 exports.list_all_indicators = function(req, res) {
-  console.log('Requesting indicators');
+  logger.info('Requesting indicators');
   
   DataWareHouse.find().sort("-computationMoment").exec(function(err, indicators) {
     if (err){
@@ -198,9 +200,9 @@ exports.getCubeDataByIntervalMonths = function(req, res){
     else{
       var cube_prom = getCubeDataByInterval(req.params.startingMonth, req.params.endingMonth);
       cube_prom.then((cube,err)=>{
-        console.log(cube.rows);
+        logger.info(cube.rows);
         cube = getCubeDataByUser(req.params.emailUser, cube);
-        console.log(cube.rows);
+        logger.info(cube.rows);
         if(cube !== null){
           var sol = new Table({
             dimensions: cube.dimensions,
@@ -267,7 +269,7 @@ exports.getCubeDataByComparisonAndMonths = function(req, res){
           let cubeRolledUpFiltered = cubeRolledUp.rows.filter((row) => {
             return comparisonFunction(row[1]);
           });
-          console.log(cubeRolledUpFiltered);
+          logger.info(cubeRolledUpFiltered);
           
           if(cubeRolledUpFiltered !== null){
             sol = cubeRolledUpFiltered;
@@ -307,7 +309,7 @@ var computeDataWareHouseJob;
 var cubeComputation;
 
 exports.rebuildPeriod = function(req, res) {
-  //console.log('Updating rebuild period. Request: period:'+req.query.rebuildPeriod);
+  //logger.info('Updating rebuild period. Request: period:'+req.query.rebuildPeriod);
   rebuildPeriod = req.query.rebuildPeriod;
   computeDataWareHouseJob.setTime(new CronTime(rebuildPeriod));
   computeDataWareHouseJob.start();
@@ -321,7 +323,7 @@ function createDataWareHouseJob(){
       computeDataWareHouseJob = new CronJob(rebuildPeriod,  function() {
       
       var new_dataWareHouse = new DataWareHouse();
-      //console.log('Cron job submitted. Rebuild period: '+rebuildPeriod);
+      //logger.info('Cron job submitted. Rebuild period: '+rebuildPeriod);
       async.parallel([
         computeTripsPerManager,
         computeApplicationsPerTrip,
@@ -331,10 +333,10 @@ function createDataWareHouseJob(){
         computeTop10Keywords
       ], function (err, results) {
         if (err){
-          console.log("Error computing datawarehouse: "+err);
+          logger.info("Error computing datawarehouse: "+err);
         }
         else{
-          //console.log("Resultados obtenidos por las agregaciones: "+JSON.stringify(results));
+          //logger.info("Resultados obtenidos por las agregaciones: "+JSON.stringify(results));
           new_dataWareHouse.TripsPerManager = results[0];
           new_dataWareHouse.ApplicationsPerTrip = results[1];
           new_dataWareHouse.PriceTrip = results[2];
@@ -345,10 +347,10 @@ function createDataWareHouseJob(){
     
           new_dataWareHouse.save(function(err, datawarehouse) {
             if (err){
-              console.log("Error saving datawarehouse: "+err);
+              logger.info("Error saving datawarehouse: "+err);
             }
             else{
-              console.log("new DataWareHouse succesfully saved. Date: "+new Date());
+              logger.info("new DataWareHouse succesfully saved. Date: "+new Date());
             }
           });
         }
@@ -360,7 +362,7 @@ function createDataWareHouseJob(){
         getInformationCube
       ], function (err, result) {
         if (err){
-          console.log("Error computing datawarehouse: "+err);
+          logger.info("Error computing datawarehouse: "+err);
         }
         else{
           Cube.deleteMany({},function(err,cube){
@@ -374,10 +376,10 @@ function createDataWareHouseJob(){
 
               new_cube.save(function(err, cube){
                 if(err){
-                  console.log("Err on saving cube: " + err);
+                  logger.info("Err on saving cube: " + err);
                 }
                 else{
-                  console.log("Cube correctly saved");
+                  logger.info("Cube correctly saved");
                 }
               });
             }

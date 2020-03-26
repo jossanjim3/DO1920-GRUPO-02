@@ -1,4 +1,7 @@
 'use strict';
+
+var logger = require('../../logger');
+
 /*---------------ACTOR Auth----------------------*/
 var mongoose = require('mongoose'),
 Actor = mongoose.model('Actors');
@@ -6,7 +9,7 @@ var admin = require('firebase-admin');
 
 exports.getUserId = async function(idToken) {
 
-    console.log('idToken: '+idToken);
+    logger.info('idToken: '+idToken);
     var id = null;
   
     var actorFromFB = await admin.auth().verifyIdToken(idToken);
@@ -14,16 +17,16 @@ exports.getUserId = async function(idToken) {
         var uid = actorFromFB.uid;
         var auth_time = actorFromFB.auth_time;
         var exp =  actorFromFB.exp;
-        console.log('idToken verificado para el uid: '+uid);
-        console.log('auth_time: '+auth_time);
-        console.log('exp: '+exp);
+        logger.info('idToken verificado para el uid: '+uid);
+        logger.info('auth_time: '+auth_time);
+        logger.info('exp: '+exp);
   
         var mongoActor = await Actor.findOne({ email: uid });
          if (!mongoActor) { return null; }
   
           else {
-              console.log('The actor exists in our DB');
-              console.log('actor: '+mongoActor);
+              logger.info('The actor exists in our DB');
+              logger.info('actor: '+mongoActor);
               id = mongoActor._id;
               return id;
           }
@@ -32,7 +35,7 @@ exports.getUserId = async function(idToken) {
 
 exports.getUser = async function(idToken) {
 
-    console.log('idToken: '+idToken);
+    logger.info('idToken: '+idToken);
     var id = null;
   
     var actorFromFB = await admin.auth().verifyIdToken(idToken);
@@ -40,16 +43,16 @@ exports.getUser = async function(idToken) {
         var uid = actorFromFB.uid;
         var auth_time = actorFromFB.auth_time;
         var exp =  actorFromFB.exp;
-        console.log('idToken verificado para el uid: '+uid);
-        console.log('auth_time: '+auth_time);
-        console.log('exp: '+exp);
+        logger.info('idToken verificado para el uid: '+uid);
+        logger.info('auth_time: '+auth_time);
+        logger.info('exp: '+exp);
   
         var mongoActor = await Actor.findOne({ email: uid });
          if (!mongoActor) { return null; }
   
           else {
-              console.log('The actor exists in our DB');
-              console.log('actor: '+mongoActor);
+              logger.info('The actor exists in our DB');
+              logger.info('actor: '+mongoActor);
               id = mongoActor._id;
               return mongoActor;
           }
@@ -58,19 +61,19 @@ exports.getUser = async function(idToken) {
 
 exports.verifyUser = function(requiredRoles) {
   return function(req, res, callback) {
-    console.log('starting verifying idToken');
-    console.log('requiredRoles: '+requiredRoles);
+    logger.info('starting verifying idToken');
+    logger.info('requiredRoles: '+requiredRoles);
     var idToken = req.headers['idtoken'];
-    console.log('idToken: '+idToken);
+    logger.info('idToken: '+idToken);
 
     admin.auth().verifyIdToken(idToken).then(function(decodedToken) {
 
         var uid = decodedToken.uid;
         var auth_time = decodedToken.auth_time;
         var exp =  decodedToken.exp;
-        console.log('idToken verificado para el uid: '+uid);
-        console.log('auth_time: '+auth_time);
-        console.log('exp: '+exp);
+        logger.info('idToken verificado para el uid: '+uid);
+        logger.info('auth_time: '+auth_time);
+        logger.info('exp: '+exp);
 
         Actor.findOne({ email: uid }, function (err, actor) {
           if (err) { res.send(err); }
@@ -82,8 +85,8 @@ exports.verifyUser = function(requiredRoles) {
             }
 
           else {
-              console.log('The actor exists in our DB');
-              console.log('actor: '+actor);
+              logger.info('The actor exists in our DB');
+              logger.info('actor: '+actor);
 
               var isAuth = false;
               for (var i = 0; i < requiredRoles.length; i++) {
@@ -107,7 +110,7 @@ exports.verifyUser = function(requiredRoles) {
         });
       }).catch(function(err) {
         // Handle error
-        console.log ("Error en autenticación: "+err);
+        logger.info ("Error en autenticación: "+err);
         res.status(403); //an access token is valid, but requires more privileges
         res.json({message: 'The actor has not the required roles',error: err});
       });

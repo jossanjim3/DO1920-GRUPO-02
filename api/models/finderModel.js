@@ -1,3 +1,5 @@
+var logger = require('../../logger');
+
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
@@ -80,7 +82,7 @@ var finderSchema = new Schema({
 }, {strict: true});
 
 finderSchema.pre('save', function(callback){
-    console.log("Middleware Save");
+    logger.info("Middleware Save");
     var timestamp = new Date();
     var newFinder = this;
     newFinder.timestamp = timestamp;
@@ -89,7 +91,7 @@ finderSchema.pre('save', function(callback){
 });
 
 finderSchema.pre('updateOne', function(callback){
-    console.log("Middleware Update One");
+    logger.info("Middleware Update One");
     var timestamp = new Date();
     var newFinder = this;
     newFinder.timestamp = timestamp;

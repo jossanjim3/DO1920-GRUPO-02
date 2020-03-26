@@ -1,3 +1,6 @@
+
+var logger = require('../../logger');
+
 const app = require("../app");
 const chai = require("chai");
 const chaiHttp = require("chai-http");
@@ -34,7 +37,7 @@ describe("API Testing for Applications", () => {
     explorerTest.save(function (err) {
       if (err) return handleError(err);
       // saved!
-      console.log("Explorer test saved! : " + explorerTest._id);
+      logger.info("Explorer test saved! : " + explorerTest._id);
     });  
 
     managerTest = new Actor(
@@ -50,7 +53,7 @@ describe("API Testing for Applications", () => {
     managerTest.save(function (err,res) {
       if (err) return handleError(err);
       // saved!
-      console.log("Manager test saved! : " + managerTest._id);
+      logger.info("Manager test saved! : " + managerTest._id);
     }); 
 
     tripTest = new Trip(
@@ -75,7 +78,7 @@ describe("API Testing for Applications", () => {
     tripTest.save(function (err) {
       if (err) return handleError(err);
       // saved!
-      console.log("Trip test saved! : " + tripTest._id);
+      logger.info("Trip test saved! : " + tripTest._id);
     }); 
 
     done();
@@ -95,7 +98,7 @@ describe("API Testing for Applications", () => {
           done(err);
         } else {
           appIdTmp = res.body._id;
-          //console.log(appIdTmp);          
+          //logger.info(appIdTmp);          
           done();
           
         }
@@ -115,7 +118,7 @@ describe("API Testing for Applications", () => {
           done(err);
         } else {
           appIdTmp = res.body._id;
-          //console.log(appIdTmp);          
+          //logger.info(appIdTmp);          
           done();
           
         }
@@ -214,7 +217,7 @@ describe("API Testing for Applications", () => {
 
   // este bloque se ejecuta despues de todo
   after( (done) => {
-    //console.log(applicationTest._id);
+    //logger.info(applicationTest._id);
 
     Application.deleteOne({ _id: appIdTmp }, function (err) {
       if (err) return handleError(err);

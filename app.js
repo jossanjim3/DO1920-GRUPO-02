@@ -1,23 +1,24 @@
 require('dotenv').config();
 
 var express = require('express'),
- app = express(),
- port = process.env.PORT || 8080,
- mongoose = require('mongoose'),
- https= require('https'),
- http = require('http'),
- cors = require('cors'),
- fs=require('fs'),
- Actor = require('./api/models/actorModel'),
- Application = require('./api/models/applicationModel'),
- Trip = require('./api/models/tripModel'),
- DataWareHouse = require('./api/models/dataWareHouseModel'),
- Finder = require('./api/models/finderModel'),
- admin=require('firebase-admin'),
- serviceAccount=require('./acme-viaje-el-corte-andaluh-firebase-adminsdk-matgx-6762472378.json'),
- bodyParser = require('body-parser');
+    app = express(),
+    port = process.env.PORT || 8080,
+    mongoose = require('mongoose'),
+    https= require('https'),
+    http = require('http'),
+    cors = require('cors'),
+    fs=require('fs'),
+    Actor = require('./api/models/actorModel'),
+    Application = require('./api/models/applicationModel'),
+    Trip = require('./api/models/tripModel'),
+    DataWareHouse = require('./api/models/dataWareHouseModel'),
+    Finder = require('./api/models/finderModel'),
+    admin=require('firebase-admin'),
+    serviceAccount=require('./acme-viaje-el-corte-andaluh-firebase-adminsdk-matgx-6762472378.json'),
+    bodyParser = require('body-parser');
  
- 
+var logger = require('./logger');
+
 mongoose.set('useFindAndModify', false);
 
 // MongoDB URI building
@@ -91,13 +92,13 @@ routesConfig(app);
 routesCargaMasiva(app);
 
 
-console.log("Connecting DB to: " + mongoDBURI);
+logger.info("Connecting DB to: " + mongoDBURI);
 
 
 mongoose.connection.on("open", function (err, conn) {
 
 http.createServer(app).listen(port, function() {
- console.log('ACME-Explorer RESTful API server started on: ' + port);
+ logger.info('ACME-Explorer RESTful API server started on: ' + port);
 });
 
  
@@ -108,7 +109,7 @@ http.createServer(app).listen(port, function() {
     cert:fs.readFileSync('server.cert')
 }, app)
 .listen(port, function (){
-    console.log('ACME-Explorer RESTful API server started on: ' + port)
+    logger.info('ACME-Explorer RESTful API server started on: ' + port)
 })
 */
 
@@ -117,7 +118,7 @@ http.createServer(app).listen(port, function() {
 
  
 mongoose.connection.on("error", function (err, conn) {
- console.error("DB init error " + err);
+ logger.error("DB init error " + err);
 });
 
 
