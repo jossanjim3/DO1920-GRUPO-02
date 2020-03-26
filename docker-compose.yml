@@ -4,8 +4,6 @@ services:
     build: .
     ports:
       - "127.0.0.1:${PORT}:${PORT}"
-    networks: 
-      service-tier:
     depends_on: 
       - mongo
     restart: on-failure
