@@ -212,6 +212,16 @@ exports.read_an_trip_ticker = function(req,res){
     })
 }
 
+exports.read_an_trip_id = function(req,res){
+    Trip.findOne({_id:req.params.id}, function(err, trip){
+        if(err){
+            res.status(500).send(err);
+        } else {
+            res.json(trip)
+        }
+    })
+}
+
 exports.delete_an_trip_ticker = function(req,res){
     Trip.remove({ticker:req.params.ticker}, function(err, trip){
         if(err){

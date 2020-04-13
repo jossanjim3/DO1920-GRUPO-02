@@ -49,6 +49,9 @@ module.exports = function (app){
         .put(trips.update_an_trip_ticker)
         .delete(trips.delete_an_trip_ticker);
 
+    app.route('/v1/trips/id/:id')
+        .get(trips.read_an_trip_id);
+
     /**
      * Publish an trip
      *   RequiredRoles: to be a Manager
