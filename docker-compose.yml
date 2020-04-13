@@ -22,7 +22,9 @@ services:
     image: "mongo"
     expose: 
       - ${DBPORT}
-    command: --port ${DBPORT} --logpath /var/log/mongodb/mongodb.log
+    ports:
+      - "${DBPORT}:${DBPORT}"
+    command: --port ${DBPORT} 
     volumes:
       - "datavol:/data/db"
       - "logsvol:/var/log/mongodb"

@@ -61,7 +61,7 @@ var tripSchema = new Schema({
     },
     pictures: [{
         data: Buffer,
-        contentType: String
+        type: String
     }],
     isPublished:{
         type: Boolean,
