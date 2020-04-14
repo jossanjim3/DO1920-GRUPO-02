@@ -17,7 +17,16 @@ var sponsorshipSchema = new Schema({
         required: 'Kindly add the sponsor who owns the sponsorship'
     },
     tripSponsorships: [{
-        trip: Schema.Types.ObjectId,
+        trip: {
+            type: String,
+            //This validation does not run after middleware pre-save
+            validate: {
+                validator: function(v) {
+                    return /\d{6}-[A-Z]{4}/.test(v);
+                },
+                message: 'ticker is not valid!, Pattern("\d(6)-[A-Z](4)")'
+            }
+        },
         paid: {
             type: Boolean,
             default: false
