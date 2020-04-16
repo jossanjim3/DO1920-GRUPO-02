@@ -303,7 +303,8 @@ var CronTime = require('cron').CronTime;
 //'*/30 * * * * *' cada 30 segundos
 //'*/10 * * * * *' cada 10 segundos
 //'* * * * * *' cada segundo
-var rebuildPeriod = '*/10 * * * * *';  //El que se usará por defecto
+//var rebuildPeriod = '*/10 * * * * *';  //El que se usará por defecto
+var rebuildPeriod = '0 0 0 */1 * *';
 var rebuildPeriodForCube = '0 0 0 */1 * *';  //'0 0 0 */1 * *' Correct period. Once every midnight 00:00 AM.
 var computeDataWareHouseJob;
 var cubeComputation;

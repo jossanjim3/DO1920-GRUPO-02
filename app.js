@@ -13,6 +13,7 @@ var express = require('express'),
     Trip = require('./api/models/tripModel'),
     DataWareHouse = require('./api/models/dataWareHouseModel'),
     Finder = require('./api/models/finderModel'),
+    Audit = require('./api/models/auditModel'),
     admin=require('firebase-admin'),
     serviceAccount=require('./acme-viaje-el-corte-andaluh-firebase-adminsdk-matgx-6762472378.json'),
     bodyParser = require('body-parser');
@@ -79,6 +80,7 @@ var routesStorage = require('./api/routes/storageRoutes');
 var routesDataWareHouse = require('./api/routes/dataWareHouseRoutes');
 var routesConfig = require('./api/routes/configRoutes');
 var routesCargaMasiva = require('./api/routes/cargaMasivaRoutes');
+var routesAudits = require('./api/routes/auditRoutes');
 
 routesActors(app);
 routesApplications(app);
@@ -90,7 +92,7 @@ routesStorage(app);
 routesDataWareHouse(app);
 routesConfig(app);
 routesCargaMasiva(app);
-
+routesAudits(app);
 
 logger.info("Connecting DB to: " + mongoDBURI);
 
