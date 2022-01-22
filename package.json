@@ -33,7 +33,7 @@
     "git": "^0.1.5",
     "http": "0.0.0",
     "mongoose": "^5.9.1",
-    "nanoid": "^2.1.11",
+    "nanoid": "^3.1.31",
     "node-fetch": "^2.6.0",
     "nodemon": "^2.0.2",
     "olap-cube": "^1.0.0",
